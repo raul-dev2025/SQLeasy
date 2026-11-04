@@ -50,6 +50,6 @@ exclude_patterns = []
 # To use other thems, install the extension first, and then replace the used
 # one, by the new you just had installed; i.e: html_theme = 'my_new_theme'
 
-html_theme = 'alabaster'
+html_theme = 'furo'
 html_static_path = ['_static']
 # intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}

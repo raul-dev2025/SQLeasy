@@ -13,7 +13,7 @@ file = 'birdOfFire.txt'
 
 # VAULT
 # Idealy, this path should be an URL path, to the 'vault-tec' server we
-# expect to host in an undeterminated future. TerritorioLinux.
+# expect to host in an undeterminated future. TécnicoSistema(raulvilchez.org).
 vault = 'user/path/to_pwd'
 
 # PANDAS COLUMNS
