@@ -1,3 +1,11 @@
+from Queries import query_create_delete_db as db_queries
+from Queries import query_create_delete_table as table_queries
+from Queries import query_alter_tables_psg as alter_queries
+from Queries import query_insert_delete_data as insert_queries
+from Queries import query_simple_queries as simple_queries
+from Queries import query_update_tables as update_queries
+from Queries import query_messages as messages_queries
+
 # This File is a map of known queries. To add new ones, just define a new variable
 # and place there your query as a simple string. At the same time, could be
 # used as a configuration file.
@@ -26,133 +34,68 @@ p_columnus = ['client_id', 'client_name', 'client_address', 'client_industry', '
 ################################################
 
 # DEFAULT QUERY
-default_query = """
-    SELECT *
-    FROM clients
-"""
+q1 = simple_queries.default_query
+
+# SHOW DATABASES
+show = simple_queries.databases
 
 # DATA BASES' NAMES
 dbNames = ['customers_db', 'dummy_db', 'postgres', 'information_schema', 
            'pg_catalog']
 
 # CREATE DATABASE
-create_dummyDB = """
-    CREATE DATABASE dummy_db
-"""
+create_db = db_queries.create_db
+
 # DELETE DATABASE
-delete_dummyDB = """
-    DROP DATABASE dummy_db
-"""
+delete_db = db_queries.delete_db
 
 # CREATE TABLE
-create_dummy_table = """
-    CREATE TABLE dummy_table(
-      dummy_id SERIAL PRIMARY KEY,
-      dummy_name VARCHAR(40) NOT NULL,
-      dummy_address VARCHAR(60) NOT NULL,
-      dummy_industry VARCHAR(20),
-      dummy_notes VARCHAR(60),
-      dummy_telephone INT,
-      dummy_status BOOLEAN
-    );
-"""
+create_table = table_queries.create_table
 
 # DELETE TABLE
-delete_dummy_table = """
-    DROP TABLE dummy_table
-"""
-delete_multiple_tables = """
-    DROP TABLE bills, budgets, clients, delivery_notes, offers, orders, products, services;
-"""
+delete_table = table_queries.delete_table
+
+# DELETE MULTIPLE TABLES
+delete_multiple_tables = table_queries.delete_multiple_tables
 
 # ALTER TABLES
-dummy_alters = """
-  ALTER TABLE dummy_table
-  ADD FOREIGN KEY(clients)
-  REFERENCES clients(client_id)
-  ON DELETE SET NULL;
-"""
+alter_table = alter_queries.table_alters
 
 # Populate tables
-pop_dummy = """
-INSERT INTO dummy_table VALUES
-(NULL, 'Atolon Inc.', 'Address street, 42', 'Rollos de pelicula', 'metrajes a encargo', '666666666', '0'),
-(NULL, 'Telas asfalticas NG.', 'Address boulevard, 21', 'Obra publica', 'hoyos/hundimientos', '666000000', '1');
-"""
-
-q1 = """
-    SELECT *
-    FROM clients
-"""
+p_table = insert_queries.populate_table
 
 # To update data
-update = """
-    UPDATE dummy_table
-    SET address = 'the new value for address field, 42'
-    WHERE dummy_id = 101;
-"""
-# Delete data
-delete_entry = """
-    DELETE FROM dummy_table
-    WHERE dummy_id = 1;
-"""
+update_query = update_queries.update_id
 
-# To push Python data structures(lists of tuples) into a database.
-# This construction, isolates the values from the usual query:
-# The Query:
-sql = """
-  INSERT INTO dummy_table (dummy_id, dummy_name, dummy_address, dummy_industry, dummy_notes, dummy_telephone, dummy_status)
-  VALUES (%s, %s, %s, %s, %s, %s, %s)
-"""
+# Delete data
+delete_entry = insert_queries.delete_registry
+
+# Insert multiple values
 # Do Note, that the placeholder has nothing to do with Python's strings
 # data type '%s'. Sql will use this syntax to work with all types
 # sql placeholder '%s' --> (str, int, dates...).
 # The data structures:
+insert_multiple = insert_queries.insert_multiple_queries
+
 val = [
     (7, 'Hunk', 'Dodson', 'ENG', None, '1991-12-23', 11111, '+09812734098'),
     (8, 'Funk', 'Bolson', 'EKR', 'ENG', '1491-15-16', 22222, '+09219014098')
 ]
+
+
 ################################################
 ############### APPLICATION MESAGES ############
 ################################################
-message = """
-You can do the following actions:\n \
-      1. Test connection\t 5. ConnectionDB \t 9. Insert into Table\n \
-      2. Start a new query\t 6. List Databases\t 10. Erase from Table\n \
-      3. Create DataBase\t 7. Create Table\t 11. Python structures\n \
-      4. Delete DataBase\t 8. Delete Table\t 12. Dump Html\n \
-      \t\tq. Exit\t\t\t 0. List saved queries
- """
+msg_map = {
+    'message': messages_queries.message,
+    'chosedB': messages_queries.chosedB,
+    'test_message': messages_queries.test_message,
+    'atention': messages_queries.atention,
+    'cancel_action': messages_queries.cancel_action,
+    'selectDb': messages_queries.selectDb,
+    'wrongDb': messages_queries.wrongDb,
+    'typeName': messages_queries.typeName
+}
 
-chosedB = """\n  Type the Data Base to update the SQL command \
-\n  or chose one in the list:\n{}"""
-
-test_message = """
-    This is a test message with formated text, ready to get displayed \
-    by the namespace.
-"""
-
-atention = """
-ATENTION! This action can NOT be UNDONE. \
-Do you want to proceed?
-"""
-
-cancel_action = """
-The process "delete_db" was canceled.
-"""
-
-selectDb = """
-\tChose one of the available Databases\n
-\tby typing one, from the following list.\n
-\t- If the Database does not exist, create one before this action.
-
-"""
-
-wrongDb = """
-\tError; The database you typed it does not exist.\n \
-\tCreate one or choose another !
-"""
-
-typeName = """
-\tWrite the DataBase name:
-"""
+for key, value in msg_map.items():
+    globals()[key] = value
