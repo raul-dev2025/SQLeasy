@@ -5,17 +5,25 @@
 # POPULATE TABLES
 # This query belongs to a table with an "AUTO_INCREMENT" inndex value; remember
 # to left 'NULL' the '_id' field.
-pop_dummy = """
+populate_table = """
 INSERT INTO dummy_table VALUES
 (NULL, 'Atolon Inc.', 'Address street, 42', 'Rollos de pelicula', 'metrajes a encargo', '666666666', '0'),
 (NULL, 'Telas asfalticas NG.', 'Address boulevard, 21', 'Obra publica', 'hoyos/hundimientos', '666000000', '1');
+"""
+
+# To push Python data structures(lists of tuples) into a database.
+# This construction, isolates the values from the usual query:
+# The Query:
+insert_multiple_queries = """
+  INSERT INTO dummy_table (dummy_id, dummy_name, dummy_address, dummy_industry, dummy_notes, dummy_telephone, dummy_status)
+  VALUES (%s, %s, %s, %s, %s, %s, %s)
 """
 
 # DELETE DATA
 # When an entire row is deleted from a table, the other index will not be
 # affected; but the table will remain with a no-contiguous list of numbered
 # indexes.
-delete_entry = """
+delete_registry = """
     DELETE FROM dummy_table
     WHERE dummy_id = 1;
 """
