@@ -3,9 +3,11 @@ default_query = """
     SELECT *
     FROM clients
 """
-# SHOW DATABASES
+
 databases = """
-    SHOW DATABASES;
+    SELECT datname
+    FROM pg_database
+    WHERE datistemplate = false;
 """
 
 # FILTERING DATABASES LIST, using SHOW DATABASES LIKE
