@@ -1,5 +1,5 @@
-import mysql.connector
-from mysql.connector import Error
+import psycopg2
+from psycopg2 import Error
 # import pandas as pd
 
 ##############################################
@@ -7,9 +7,9 @@ from mysql.connector import Error
 ##############################################
 
 ####### connect to the serer and create database #######
-def create_server_connection(host_name, user_name, user_pwd):
+def create_server_connection(host_name, user_name, user_pwd, dbName):
   """
-  An implemented function prototype, teaching the MySQL ``connect()`` method
+  An implemented function prototype, teaching the PostgreSQL ``connect()`` method
   how_to guide. Application <SQLeasy module> use it to check the database server
   connection.
 
@@ -17,14 +17,17 @@ def create_server_connection(host_name, user_name, user_pwd):
   :paran user_name: user name.
   :paran user_pwd: idem as definition name.
   """
-  connection = None
+  connection = psycopg2.connect(dbname="postgres", user=user_name, password=user_pwd, host=host_name)
+  connection.autocommit = True
   try:
-    connection = mysql.connector.connect(
+    connection = psycopg2.connect(
     host=host_name,
     user=user_name,
-    passwd=user_pwd
+    password=user_pwd,
+    database=dbName,
+    gssencmode='disable'
     )
-    print("MySQL Database connection successful")
+    print("PostgreSQL Database connection successful")
   except Error as err:
     print(f"Error: '{err}'")
 
@@ -42,7 +45,7 @@ def create_database(connection, query):
   natural SQL interface.
 
   :param connection: defined connection. See create_server_connection().
-  :param query: python simple string. Save any MySQL valid query to
+  :param query: python simple string. Save any PostgreSQL valid query to
                 modify the defaul value.
   '''
   cursor = connection.cursor()
@@ -55,7 +58,7 @@ def create_database(connection, query):
 ####### SECTION modify server connectionfunction #######
 def create_db_connection(host_name, user_name, user_pwd, dbName):
   '''
-  A function library to reuse the code. It defines a MySQL server connection
+  A function library to reuse the code. It defines a PostgreSQL server connection
   Actualy the only value that not have defults is ``host_name``; not yet
   implemented.
 
@@ -66,13 +69,13 @@ def create_db_connection(host_name, user_name, user_pwd, dbName):
   '''
   connection = None
   try:
-      connection = mysql.connector.connect(
+      connection = psycopg2.connect(
           host=host_name,
           user=user_name,
-          passwd=user_pwd,
+          password=user_pwd,
           database=dbName
       )
-      print("MySQL Database connection successful")
+      print("PostgreSQL Database connection successful")
   except Error as err:
       print(f"Error: '{err}'")
 
@@ -124,7 +127,7 @@ def read_query(connection, query):
 
 def execute_list_query(connection, sql, val):
   """
-  MySQL function to push 'packaged' data to the DB. It takes a Python data
+  PostgreSQL function to push 'packaged' data to the DB. It takes a Python data
   structures -such as a list, and insert directly into the database.
   Useful to store user activity logs or inputs from users into a wiki or
   social media app, we have built.
@@ -139,7 +142,7 @@ def execute_list_query(connection, sql, val):
   a specifically named variable, if you think in save the query for automated
   queries; more easy to find inside the config file.
 
-  :parm connection: MySQL connection.
+  :parm connection: PostgreSQL connection.
   :parm sql: the SQL command you are trying to run.
   :parm val: a list of Python tuples.
   """
