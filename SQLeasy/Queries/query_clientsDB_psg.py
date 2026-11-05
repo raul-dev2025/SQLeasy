@@ -14,6 +14,7 @@
 # client_id, client_name, client_address, client_industry, client_location,
 # client_postal_code, client_email, client_notes, client_telephone,
 # client_created, client_status
+# Tabla principal de clientes y datos de contacto
 create_clients_table = """
     CREATE TABLE clients(
       client_id SERIAL PRIMARY KEY,
@@ -33,6 +34,7 @@ create_clients_table = """
 # If you want to know which product belongs to which provaider
 # you must start a query aginst the provaiderDB. So product_sku_num
 # is the key here.
+# Tabla del catálogo de productos
 create_products_table = """
     CREATE TABLE products(
       product_id SERIAL PRIMARY KEY,
@@ -48,6 +50,7 @@ create_products_table = """
     );
 """
 
+# Tabla de servicios disponibles
 create_services_table = """
     CREATE TABLE services(
       service_id SERIAL PRIMARY KEY,
@@ -68,6 +71,7 @@ create_services_table = """
 # recives the 'foreign key' IT MUST EXIST, before stablish
 # the cross reference. In this case it's wanted to reference
 # the client table, so it is added a client field on each table.
+# Tabla de ofertas comerciales vinculadas a clientes
 create_offers_table = """
     CREATE TABLE offers(
       offer_id SERIAL PRIMARY KEY,
@@ -83,6 +87,7 @@ create_offers_table = """
     );
 """
 
+# Tabla de presupuestos
 create_budgets_table = """
     CREATE TABLE budgets(
       budget_id SERIAL PRIMARY KEY,
@@ -98,6 +103,7 @@ create_budgets_table = """
     );
 """
 
+# Tabla de facturación(facturas)
 create_bills_table = """
     CREATE TABLE bills(
       bill_id SERIAL PRIMARY KEY,
@@ -113,6 +119,7 @@ create_bills_table = """
     );
 """
 
+# Tabla de pedidos
 create_orders_table = """
     CREATE TABLE orders(
       order_id SERIAL PRIMARY KEY,
@@ -128,6 +135,7 @@ create_orders_table = """
     );
 """
 
+# Tabla de albaranes de entrega
 create_delivery_notes_table = """
     CREATE TABLE delivery_notes(
       dn_id SERIAL PRIMARY KEY,
@@ -143,17 +151,22 @@ create_delivery_notes_table = """
     );
 """
 
-create_bolsa_horas_table = """
-    CREATE TABLE bolsa_horas(
-      bolsa_id SERIAL PRIMARY KEY,
-      client INT DEFAULT NULL,
-      horas_totales DECIMAL NOT NULL,
-      horas_consumidas DECIMAL NOT NULL DEFAULT 0.00,
-      bolsa_status BOOLEAN NOT NULL DEFAULT TRUE
+# Tabla de control de bolsa de horas y consumo de saldo
+create_hourly_pool_table = """
+    CREATE TABLE bolsa_horas (
+      id SERIAL PRIMARY KEY,
+      iguala_id INT REFERENCES iguala(id) ON DELETE CASCADE,
+      horas_compradas NUMERIC(6,2) NOT NULL,
+      horas_consumidas NUMERIC(6,2) DEFAULT 0.00,
+      horas_restantes NUMERIC(6,2) GENERATED ALWAYS AS (horas_compradas - horas_consumidas) STORED,
+      periodo_mes INT NOT NULL,
+      periodo_anio INT NOT NULL,
+      fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 """
 
-create_intervenciones_table = """
+# Tabla de registro de intervenciones técnicas presenciales o remotas
+create_interventions_table = """
     CREATE TABLE intervenciones(
       intervencion_id SERIAL PRIMARY KEY,
       client INT DEFAULT NULL,
@@ -162,6 +175,35 @@ create_intervenciones_table = """
       descripcion VARCHAR(100) NOT NULL,
       horas_invertidas DECIMAL NOT NULL,
       intervencion_status BOOLEAN NOT NULL DEFAULT TRUE
+    );
+"""
+
+# Tabla de contratos de iguala y condiciones periódicas
+create_maintenance_contract_table = """
+    CREATE TABLE iguala (
+      id SERIAL PRIMARY KEY,
+      cliente_id INT NOT NULL,
+      concepto VARCHAR(150) NOT NULL,
+      horas_incluidas NUMERIC(5,2) DEFAULT 0.00,
+      tarifa_mensual NUMERIC(10,2) NOT NULL,
+      fecha_inicio DATE NOT NULL,
+      fecha_fin DATE,
+      activo BOOLEAN DEFAULT TRUE,
+      observaciones TEXT
+    );
+"""
+
+# Tabla de gestión de avisos y urgencias prioritarias
+create_emergencies_table = """
+    CREATE TABLE urgencias (
+      id SERIAL PRIMARY KEY,
+      cliente_id INT NOT NULL,
+      fecha_aviso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      nivel_prioridad VARCHAR(20) CHECK (nivel_prioridad IN ('Alta', 'Crítica', 'Urgente')),
+      descripcion_incidencia TEXT NOT NULL,
+      tiempo_respuesta_minutos INT,
+      resuelta BOOLEAN DEFAULT FALSE,
+      intervencion_asociada_id INT REFERENCES intervenciones(id) ON DELETE SET NULL
     );
 """
 
