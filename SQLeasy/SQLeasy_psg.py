@@ -1,7 +1,7 @@
 import os
 import pandas as pd
-import FreeCC, display_initiator
-import knownQueries as sql_strings
+import FreeCC_psg as FreeCC, display_initiator
+import knownQueries_psg as sql_strings
 import Queries.query_alter_tables as qvar
 
 
@@ -23,6 +23,7 @@ def prompt_user():
   return name
 
   # separator
+
 def get_dbName(dbName=sql_strings.defaultdB):
   '''
   A function to set up the database name.
@@ -35,23 +36,27 @@ def get_dbName(dbName=sql_strings.defaultdB):
   '''
   return dbName
 
-  # separator
-def get_pw(file=sql_strings.file):
+def get_vault_config():
   '''
-  A function to avoid writing sensible data, in a plain text maner.
-  Defaults to config file set up. Use this argument to config
-  a new value in run time.
-
-  :param: file_name var. Placeholder.
+  A function to read configuration variables from the vault path/file 
+  defined in knownQueries_psg. Parses KEY=VALUE lines into a dictionary.
   '''
-  path = os.getcwd()
-  target_path = os.chdir(sql_strings.vault)
-  with open(file, mode='r') as a_file:
-    pw = a_file.read()
-    os.chdir(path)
-    return pw
+  base_path = os.path.dirname(os.path.abspath(__file__))
+  
+  # Usamos un archivo por defecto o el nombre especificado en las variables
+  target_file = getattr(sql_strings, 'vault', '.hatch')
+  file_path = os.path.join(base_path, target_file)
 
-    # separator
+  config = {}
+  
+  with open(file_path, mode='r', encoding='utf-8') as a_file:
+    for line in a_file:
+      if '=' in line and not line.strip().startswith('#'):
+        key, value = line.strip().split('=', 1)
+        config[key.strip()] = value.strip()
+        
+  return config
+
 def test_connection():
   '''
   Test The SQL server state. Expected result: successful connection.
@@ -59,12 +64,16 @@ def test_connection():
 
   :param return: return connection.
   '''
-  user_pwd = get_pw()
-  connection = FreeCC.create_server_connection('localhost', 'root', user_pwd)
+  config = get_vault_config()
+  connection = FreeCC.create_server_connection(
+    config.get('DB_HOST'),
+    config.get('DB_USER'),
+    config.get('DB_PASS'),
+    config.get('DB_NAME'),    
+  )
 
   return connection
 
-  # separator
 def connect_to_database(dbName=sql_strings.defaultdB):
   """
   Connect to available database.
@@ -75,20 +84,25 @@ def connect_to_database(dbName=sql_strings.defaultdB):
   """
   print(sql_strings.selectDb)
   list_dataBases()
-  dbName = input('>>> ')
-  if (dbName in sql_strings.dbNames) or (dbName == ''):
-    connection = FreeCC.create_db_connection('localhost',
-                                'root',
-                                get_pw(),
-                                get_dbName(dbName))
-    # print('\t', dbName, 'Connection established')
-    print('\t{} Connection established'.format(dbName))
+  userInput = input('>>> ')
+
+  target_db = userInput if userInput else dbName
+
+  if (target_db in sql_strings.dbNames):
+    config = get_vault_config()
+    connection = FreeCC.create_db_connection(
+      config.get('DB_HOST'),
+      config.get('DB_USER'),
+      config.get('DB_PASS'),
+      target_db
+    )
+    print('\t{} Connection established'.format(target_db))
   else:
-    print(sql_strings.wrongDb, '', dbName)
+    print(sql_strings.wrongDb, '', target_db)
+    connection = None
 
   return connection
 
-  # separator
 def start_query(default=sql_strings.default_query):
   """
   Starts a new query on the server side.
@@ -96,16 +110,18 @@ def start_query(default=sql_strings.default_query):
   :param default: default query. Positional, implicit named, called
     by omision.
   """
-  dbName, user_pwd = get_dbName(), get_pw()
-  connection = FreeCC.create_db_connection("localhost",
-                                             "root",
-                                             user_pwd,
-                                             dbName)
+  config = get_vault_config()
+  dbName = get_dbName()
+  connection = FreeCC.create_db_connection(
+    config.get('DB_HOST'),
+    config.get('DB_USER'),
+    config.get('DB_PASS'),
+    dbName
+  )  
   results = FreeCC.read_query(connection, sql_strings.default_query)
   for result in results:
     print(result)
 
-  # separator
 def list_dataBases():
   """
   Loops in a database list.
@@ -115,7 +131,6 @@ def list_dataBases():
     print('\t', dbName)
     # print(dbNames.index(dbName), '-', dbName)
 
-    # separator
 def replace_sql_cmd():
   # file = sql_strings.file
   sql_cmd = sql_strings.create_dummyDB
@@ -132,6 +147,7 @@ def replace_sql_cmd():
 
 
   # return cursor
+
 def create_db():
   """
   A method creates a database. As usual wrap the query fn() inside
@@ -140,6 +156,7 @@ def create_db():
   replace_sql_cmd()
 
   # separator
+
 def delete_db():
   """
   Delete the Data Base name. Defuaults to configuration variable
@@ -168,6 +185,7 @@ def delete_db():
     print(sql_strings.cancel_action)
 
     # separator
+
 def create_table():
   """
   This method creates a table. As usual wrap the query fn() inside
@@ -179,6 +197,7 @@ def create_table():
   FreeCC.execute_query(connection, sql_strings.create_dummy_table)
 
   # separator
+
 def delete_table():
   """
   This method deletes a table. As usual wrap the query fn() inside
@@ -190,6 +209,7 @@ def delete_table():
   FreeCC.execute_query(connection, sql_strings.delete_dummy_table)
 
   # separator
+
 def insert_into_table():
   """
   Insert into table <table name>. It takes no arguments;
@@ -207,6 +227,7 @@ def insert_into_table():
   FreeCC.execute_query(connection, sql_strings.pop_dummy)
 
   # separator
+
 def delete_from_table():
   """
   Deletes records from a table. As usual wrap the query fn()
@@ -218,6 +239,7 @@ def delete_from_table():
   FreeCC.execute_query(connection, sql_strings.delete_entry)
 
   # separator
+
 def modify_table():
     """
     A function wrapper. It calls execute_query() wich takes two arguments.
@@ -233,6 +255,7 @@ def modify_table():
     # import statement, connection definition(1), fn_call(many)
 
     # separator
+
 def modify_many_table():
     """
     A function wrapper. It calls execute_list_query().
@@ -246,6 +269,7 @@ def modify_many_table():
     FreeCC.execute_list_query(connection, sql_strings.sql, sql_strings.val)
 
     # separator
+
 def dump_html():
   '''
   Specific to the Pandas library. Default's Pandas method requires a list of
@@ -270,7 +294,6 @@ def dump_html():
     html = df.to_html()
     a_file.write(html)
 
-
 def init_app():
   """Documentation"""
   options = display_initiator.display_options()
@@ -281,10 +304,7 @@ def init_app():
 
 
 
-
-
-
 if __name__ == "__main__":
- init_app()
+  init_app()
 
 # pdb.run('init_app()')
