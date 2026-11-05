@@ -1,10 +1,11 @@
-# There are no defaults, security, stability... reasons.
-dummy_alters = """
+# ALTER TABLES, There are no defaults, security, stability... reasons.
+table_alters = """
   ALTER TABLE dummy_table
   ADD FOREIGN KEY(clients)
   REFERENCES clients(client_id)
   ON DELETE SET NULL;
 """
+
 alt_size_type = """
 ALTER TABLE dummy_db.dummy_table
 CHANGE COLUMN dummy_industry dummy_industry VARCHAR(30) NULL DEFAULT NULL;
