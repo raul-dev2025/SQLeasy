@@ -3,10 +3,10 @@
 # file.
 
 # CREATE DATABASE
-create_dummyDB = """
+create_db = """
     CREATE DATABASE dummy_db
 """
 # DELETE DATABASE
-delete_dummyDB = """
+delete_db = """
     DROP DATABASE dummy_db
 """
