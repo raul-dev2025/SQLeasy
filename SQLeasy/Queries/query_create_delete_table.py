@@ -3,9 +3,9 @@
 # file.
 
 # CREATE TABLE
-create_dummy_table = """
+create_table = """
     CREATE TABLE dummy_table(
-      dummy_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      dummy_id SERIAL PRIMARY KEY,
       dummy_name VARCHAR(40) NOT NULL,
       dummy_address VARCHAR(60) NOT NULL,
       dummy_industry VARCHAR(20),
@@ -16,9 +16,11 @@ create_dummy_table = """
 """
 
 # DELETE TABLE
-delete_dummy_table = """
+delete_table = """
     DROP TABLE dummy_table
 """
+
+# DELETE MULTIPLE TABLES
 delete_multiple_tables = """
     DROP TABLE bills, budgets, clients, delivery_notes, offers, orders, products, services;
 """
