@@ -1,10 +1,8 @@
 import os
 import pandas as pd
-import FreeCC_psg as FreeCC, display_initiator
+import FreeCC_psg as FreeCC, display_initiator_psg as display_initiator
 import knownQueries_psg as sql_strings
-import Queries.query_alter_tables as qvar
-
-
+import Queries.query_alter_tables_psg as qvar
 
 # get_machine()
 # get_user()
@@ -103,7 +101,7 @@ def connect_to_database(dbName=sql_strings.defaultdB):
 
   return connection
 
-def start_query(default=sql_strings.default_query):
+def start_query(default=sql_strings.show):
   """
   Starts a new query on the server side.
 
@@ -118,7 +116,7 @@ def start_query(default=sql_strings.default_query):
     config.get('DB_PASS'),
     dbName
   )  
-  results = FreeCC.read_query(connection, sql_strings.default_query)
+  results = FreeCC.read_query(connection, sql_strings.show)
   for result in results:
     print(result)
 
@@ -133,7 +131,7 @@ def list_dataBases():
 
 def replace_sql_cmd():
   # file = sql_strings.file
-  sql_cmd = sql_strings.create_dummyDB
+  sql_cmd = sql_strings.create_db
   print(sql_strings.chosedB.format(sql_cmd))
   list_dataBases()
   dbName = input('>>> ')
@@ -148,7 +146,7 @@ def replace_sql_cmd():
 
   # return cursor
 
-def create_db():
+def create_DB():
   """
   A method creates a database. As usual wrap the query fn() inside
   a python function-documentation block.
@@ -157,7 +155,7 @@ def create_db():
 
   # separator
 
-def delete_db():
+def delete_DB():
   """
   Delete the Data Base name. Defuaults to configuration variable
   defined in respective file. Look in documentation pages to refer it.
@@ -177,7 +175,7 @@ def delete_db():
   if (confirmation == 'y'):
     print(sql_strings.typeName)
     dbName = prompt_user()
-    sql_cmd = sql_strings.delete_dummyDB
+    sql_cmd = sql_strings.delete_db
     sql_cmd = sql_cmd.replace('dummy_db', dbName)
     connection = test_connection()
     FreeCC.execute_query(connection, sql_cmd)
@@ -224,7 +222,7 @@ def insert_into_table():
   Use that to adjust the task.
   """
   connection = connect_to_database()
-  FreeCC.execute_query(connection, sql_strings.pop_dummy)
+  FreeCC.execute_query(connection, sql_strings.p_table)
 
   # separator
 
@@ -295,11 +293,26 @@ def dump_html():
     a_file.write(html)
 
 def init_app():
-  """Documentation"""
-  options = display_initiator.display_options()
-  fn = input('>>> ')
-  fn = options[fn]
-  exec(fn)
+    """Documentation"""
+    # 1. Imprimir tu mensaje formateado en columnas
+    print(sql_strings.message)
+
+    # 2. Obtener el diccionario de opciones (que mapea los números a funciones)
+    options = display_initiator.display_options()
+
+    # 3. Capturar la opción del usuario
+    fn = input('>>> ')
+
+    # Manejar la salida si el usuario pulsa 'q'
+    if fn.lower() == 'q':
+        print("Saliendo de SQLeasy...")
+        return
+
+    # Ejecutar la opción seleccionada si existe en el diccionario
+    if fn in options:
+        exec(options[fn])
+    else:
+        print("Error: Opción no válida.")
 
 
 
