@@ -14,7 +14,7 @@ file = 'birdOfFire.txt'
 # VAULT
 # Idealy, this path should be an URL path, to the 'vault-tec' server we
 # expect to host in an undeterminated future. TécnicoSistema(raulvilchez.org).
-vault = 'user/path/to_pwd'
+vault = '.hatch'
 
 # PANDAS COLUMNS
 # It should be consulted the table before; run a simple query to
@@ -32,8 +32,8 @@ default_query = """
 """
 
 # DATA BASES' NAMES
-dbNames = ['customers_db', 'dummy_db', 'information_schema',
-           'mysql', 'performance_schema', 'sakila', 'sys', 'world']
+dbNames = ['customers_db', 'dummy_db', 'postgres', 'information_schema', 
+           'pg_catalog']
 
 # CREATE DATABASE
 create_dummyDB = """
@@ -47,7 +47,7 @@ delete_dummyDB = """
 # CREATE TABLE
 create_dummy_table = """
     CREATE TABLE dummy_table(
-      dummy_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      dummy_id SERIAL PRIMARY KEY,
       dummy_name VARCHAR(40) NOT NULL,
       dummy_address VARCHAR(60) NOT NULL,
       dummy_industry VARCHAR(20),
