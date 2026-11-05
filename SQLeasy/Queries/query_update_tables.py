@@ -13,14 +13,14 @@
 
 # TO UPDATE DATA
 # This is BAD PRACTICE.
-update = """
+update_id = """
     UPDATE dummy_table
     SET dummy_id = 1
     WHERE dummy_id = 2;
 """
 
 # ok with that.
-update2 = """
+update_addr = """
     UPDATE dummy_table
     SET address = 'the new value for address field, 42'
     WHERE dummy_id = 101;
