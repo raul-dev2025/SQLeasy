@@ -9,14 +9,14 @@
 #    fn_name(connection, sql_var)
 #    ...
 # 3. The easiest thing is to avoid innecessary imports, and just use the configuration
-#    file. Remember to flush all extra calls from code, to keeped clean.
+#    file. Remember to flush all extra calls from code, to keep it clean.
 
 # client_id, client_name, client_address, client_industry, client_location,
 # client_postal_code, client_email, client_notes, client_telephone,
 # client_created, client_status
 create_clients_table = """
     CREATE TABLE clients(
-      client_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      client_id SERIAL PRIMARY KEY,
       client_name VARCHAR(40) NOT NULL,
       client_address VARCHAR(60) NOT NULL,
       client_industry VARCHAR(20),
@@ -25,8 +25,8 @@ create_clients_table = """
       client_email VARCHAR(20),
       client_notes VARCHAR(60),
       client_telephone INT,
-      client_created datetime NOT NULL,
-      client_status BOOLEAN NOT NULL DEFAULT '1'
+      client_created TIMESTAMP NOT NULL,
+      client_status BOOLEAN NOT NULL DEFAULT TRUE
     );
 """
 # one to many: one product to many clients!
@@ -35,7 +35,7 @@ create_clients_table = """
 # is the key here.
 create_products_table = """
     CREATE TABLE products(
-      product_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      product_id SERIAL PRIMARY KEY,
       product_name VARCHAR(40) NOT NULL,
       product_sku_num VARCHAR(20) NOT NULL,
       product_description VARCHAR(60) NOT NULL,
@@ -43,14 +43,14 @@ create_products_table = """
       product_discount INT,
       product_tax INT,
       product_pvp decimal,
-      product_last_update timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      product_status BOOLEAN NOT NULL DEFAULT '1'
+      product_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      product_status BOOLEAN NOT NULL DEFAULT TRUE
     );
 """
 
 create_services_table = """
     CREATE TABLE services(
-      service_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      service_id SERIAL PRIMARY KEY,
       service_name VARCHAR(40) NOT NULL,
       product_sku_num VARCHAR(20) NOT NULL,
       service_description VARCHAR(60) NOT NULL,
@@ -58,8 +58,8 @@ create_services_table = """
       service_discount INT,
       service_tax INT,
       service_pvp decimal,
-      service_last_update timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      service_status BOOLEAN NOT NULL DEFAULT '1'
+      service_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      service_status BOOLEAN NOT NULL DEFAULT TRUE
     );
 """
 
@@ -70,7 +70,7 @@ create_services_table = """
 # the client table, so it is added a client field on each table.
 create_offers_table = """
     CREATE TABLE offers(
-      offer_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      offer_id SERIAL PRIMARY KEY,
       client INT DEFAULT NULL,
       offer_name VARCHAR(40) NOT NULL,
       offer_description VARCHAR(60) NOT NULL,
@@ -78,14 +78,14 @@ create_offers_table = """
       offer_discount INT,
       offer_tax INT,
       offer_pvp decimal,
-      offer_last_update timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      offer_status BOOLEAN NOT NULL DEFAULT '1'
+      offer_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      offer_status BOOLEAN NOT NULL DEFAULT TRUE
     );
 """
 
 create_budgets_table = """
     CREATE TABLE budgets(
-      budget_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      budget_id SERIAL PRIMARY KEY,
       client INT DEFAULT NULL,
       budget_name VARCHAR(40) NOT NULL,
       budget_description VARCHAR(60) NOT NULL,
@@ -93,14 +93,14 @@ create_budgets_table = """
       budget_discount INT,
       budget_tax INT,
       budget_pvp decimal,
-      offer_last_update timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      budget_status BOOLEAN NOT NULL DEFAULT '1'
+      offer_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      budget_status BOOLEAN NOT NULL DEFAULT TRUE
     );
 """
 
 create_bills_table = """
     CREATE TABLE bills(
-      bill_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      bill_id SERIAL PRIMARY KEY,
       client INT DEFAULT NULL,
       bill_name VARCHAR(40) NOT NULL,
       bill_description VARCHAR(60) NOT NULL,
@@ -108,14 +108,14 @@ create_bills_table = """
       bill_discount INT,
       bill_tax INT,
       bill_pvp decimal,
-      offer_last_update timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      bill_status BOOLEAN NOT NULL DEFAULT '1'
+      offer_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      bill_status BOOLEAN NOT NULL DEFAULT TRUE
     );
 """
 
 create_orders_table = """
     CREATE TABLE orders(
-      order_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      order_id SERIAL PRIMARY KEY,
       client INT DEFAULT NULL,
       order_name VARCHAR(40) NOT NULL,
       order_description VARCHAR(60) NOT NULL,
@@ -123,14 +123,14 @@ create_orders_table = """
       order_discount INT,
       order_tax INT,
       order_pvp decimal,
-      offer_last_update timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      order_status BOOLEAN NOT NULL DEFAULT '1'
+      offer_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      order_status BOOLEAN NOT NULL DEFAULT TRUE
     );
 """
 
 create_delivery_notes_table = """
     CREATE TABLE delivery_notes(
-      dn_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      dn_id SERIAL PRIMARY KEY,
       client INT DEFAULT NULL,
       dn_name VARCHAR(40) NOT NULL,
       dn_description VARCHAR(60) NOT NULL,
@@ -138,10 +138,34 @@ create_delivery_notes_table = """
       dn_discount INT,
       dn_tax INT,
       dn_pvp decimal,
-      offer_last_update timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      dn_status BOOLEAN NOT NULL DEFAULT '1'
+      offer_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      dn_status BOOLEAN NOT NULL DEFAULT TRUE
     );
 """
+
+create_bolsa_horas_table = """
+    CREATE TABLE bolsa_horas(
+      bolsa_id SERIAL PRIMARY KEY,
+      client INT DEFAULT NULL,
+      horas_totales DECIMAL NOT NULL,
+      horas_consumidas DECIMAL NOT NULL DEFAULT 0.00,
+      bolsa_status BOOLEAN NOT NULL DEFAULT TRUE
+    );
+"""
+
+create_intervenciones_table = """
+    CREATE TABLE intervenciones(
+      intervencion_id SERIAL PRIMARY KEY,
+      client INT DEFAULT NULL,
+      bolsa_id INT DEFAULT NULL,
+      fecha_intervencion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      descripcion VARCHAR(100) NOT NULL,
+      horas_invertidas DECIMAL NOT NULL,
+      intervencion_status BOOLEAN NOT NULL DEFAULT TRUE
+    );
+"""
+
+
 
 ################################################
 ############### TABLE INSERTS ##################
