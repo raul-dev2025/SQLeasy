@@ -35,7 +35,7 @@ def display_options():
       if len(string) >= 2:
         a_list.append((string[0], string[1]))
         # Imprimimos la opción en pantalla para que el usuario la vea
-        print(f"\t{string[0]} - {string[1]}")
+        # print(f"\t{string[0]} - {string[1]}")
 
   result = dict(a_list)
   return result
