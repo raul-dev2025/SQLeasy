@@ -281,9 +281,7 @@ def modify_many_table():
     :param default: not implemented yet.
     """
     connection = connect_to_database()
-    FreeCC.execute_list_query(connection, sql_strings.sql, sql_strings.val)
-
-    # separator
+    FreeCC.execute_list_query(connection, sql_strings.insert_multiple, sql_strings.val)
 
 def dump_html():
   '''
