@@ -6,6 +6,9 @@ from Queries import query_simple_queries as simple_queries
 from Queries import query_update_tables as update_queries
 from Queries import query_messages as messages_queries
 
+from Queries import query_clientsDB_psg as dbClients
+
+
 # This File is a map of known queries. To add new ones, just define a new variable
 # and place there your query as a simple string. At the same time, could be
 # used as a configuration file.
@@ -27,7 +30,7 @@ vault = '.hatch'
 # PANDAS COLUMNS
 # It should be consulted the table before; run a simple query to
 # get the column's name.
-p_columnus = ['client_id', 'client_name', 'client_address', 'client_industry', 'client_notes', 'client_telephone', 'client_status']
+p_columnus = ['id', 'name', 'address', 'industry', 'location', 'postal_code', 'email', 'notes', 'telephone', 'created', 'status']
 
 ################################################
 ################### QUERIES ###################
