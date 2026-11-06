@@ -313,14 +313,13 @@ def dump_html():
     a_file.write(html)
 
 def init_app():
-    """Documentation"""
-    # 1. Imprimir tu mensaje formateado en columnas
+    """
+    1. Print the formatted message in columns.
+    2. Retrieve the options dictionary mapping numbers to functions.
+    3. Capture the user input option.
+    """
     print(sql_strings.message)
-
-    # 2. Obtener el diccionario de opciones (que mapea los números a funciones)
     options = display_initiator.display_options()
-
-    # 3. Capturar la opción del usuario
     fn = input('>>> ')
 
     # Manejar la salida si el usuario pulsa 'q'
@@ -330,7 +329,9 @@ def init_app():
 
     # Ejecutar la opción seleccionada si existe en el diccionario
     if fn in options:
+        clear_screen()
         exec(options[fn])
+
     else:
         print("Error: Opción no válida.")
 
