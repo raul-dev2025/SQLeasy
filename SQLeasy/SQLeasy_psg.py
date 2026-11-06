@@ -207,17 +207,14 @@ def delete_DB():
 
     # separator
 
-def create_table():
+def createTable():
   """
   This method creates a table. As usual wrap the query fn() inside
   a python function-documentation block.
 
   :param default: not implemented yet.
   """
-  connection = connect_to_database()
-  FreeCC.execute_query(connection, sql_strings.create_dummy_table)
-
-  # separator
+  run_with_connection(FreeCC.execute_query, sql_strings.create_table)
 
 def deleteTable():
   """
