@@ -82,3 +82,6 @@ orders_alters = """
   REFERENCES clients(client_id)
   ON DELETE SET NULL;
 """
+inter = """
+ALTER TABLE intervenciones RENAME COLUMN intervencion_id TO id;
+"""
