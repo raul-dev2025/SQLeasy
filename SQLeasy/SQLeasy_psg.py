@@ -88,6 +88,10 @@ def connect_to_database(dbName=sql_strings.defaultdB):
   list_dataBases()
   userInput = input('>>> ')
 
+  if userInput.lower() == 'q':
+    print("\nCanceled action.")
+    return None
+
   target_db = userInput if userInput else dbName
 
   if (target_db in sql_strings.dbNames):
