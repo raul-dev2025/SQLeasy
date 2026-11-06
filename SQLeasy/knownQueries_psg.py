@@ -54,6 +54,7 @@ delete_db = db_queries.delete_db
 
 # CREATE TABLE
 create_table = table_queries.create_table
+client_table = dbClients.create_clients_table
 
 # DELETE TABLE
 delete_table = table_queries.delete_table
