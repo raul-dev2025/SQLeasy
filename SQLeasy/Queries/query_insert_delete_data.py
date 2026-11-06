@@ -15,8 +15,8 @@ INSERT INTO dummy_table VALUES
 # This construction, isolates the values from the usual query:
 # The Query:
 insert_multiple_queries = """
-  INSERT INTO dummy_table (dummy_id, dummy_name, dummy_address, dummy_industry, dummy_notes, dummy_telephone, dummy_status)
-  VALUES (%s, %s, %s, %s, %s, %s, %s)
+  INSERT INTO clients (name, address, industry, location, postal_code, email, notes, telephone, created, status)
+  VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
 """
 
 # DELETE DATA
