@@ -20,7 +20,11 @@ def prompt_user():
 
   return name
 
-  # separator
+def clear_screen():
+  """
+  Clear the screen before executing the selected option.
+  """
+  os.system('cls' if os.name == 'nt' else 'clear')
 
 def get_dbName(dbName=sql_strings.defaultdB):
   '''
