@@ -17,7 +17,7 @@ create_table = """
 
 # DELETE TABLE
 delete_table = """
-    DROP TABLE dummy_table
+    DROP TABLE clients
 """
 
 # DELETE MULTIPLE TABLES
