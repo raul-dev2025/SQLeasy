@@ -30,7 +30,15 @@ SELECT DATABASE();
 # SHOW TABLES
 # It will not show anythng if a database it's not chosen before.
 show_tables = """
-SHOW TABLES;
+    SELECT table_name
+    FROM information_schema.tables
+    WHERE table_schema = 'public';
+"""
+
+show_table = """
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'nombre_de_la_tabla';
 """
 
 # query JOIN
