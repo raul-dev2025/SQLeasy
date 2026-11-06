@@ -17,17 +17,17 @@
 # Tabla principal de clientes y datos de contacto
 create_clients_table = """
     CREATE TABLE clients(
-      client_id SERIAL PRIMARY KEY,
-      client_name VARCHAR(40) NOT NULL,
-      client_address VARCHAR(60) NOT NULL,
-      client_industry VARCHAR(20),
-      client_location VARCHAR(20),
-      client_postal_code INT,
-      client_email VARCHAR(20),
-      client_notes VARCHAR(60),
-      client_telephone INT,
-      client_created TIMESTAMP NOT NULL,
-      client_status BOOLEAN NOT NULL DEFAULT TRUE
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      address VARCHAR(100) NOT NULL,
+      industry VARCHAR(40),
+      location VARCHAR(40),
+      postal_code INT,
+      email VARCHAR(100),
+      notes VARCHAR(100),
+      telephone INT,
+      created TIMESTAMP NOT NULL,
+      status BOOLEAN NOT NULL DEFAULT TRUE
     );
 """
 # one to many: one product to many clients!
@@ -199,7 +199,7 @@ create_emergencies_table = """
       id SERIAL PRIMARY KEY,
       cliente_id INT NOT NULL,
       fecha_aviso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      nivel_prioridad VARCHAR(20) CHECK (nivel_prioridad IN ('Alta', 'Crítica', 'Urgente')),
+      nivel_prioridad VARCHAR(20) CHECK (nivel_prioridad IN ('Alta', 'Critica', 'Urgente')),
       descripcion_incidencia TEXT NOT NULL,
       tiempo_respuesta_minutos INT,
       resuelta BOOLEAN DEFAULT FALSE,
