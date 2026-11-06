@@ -109,6 +109,21 @@ def connect_to_database(dbName=sql_strings.defaultdB):
 
   return connection
 
+def run_with_connection(query_func, *args, **kwargs):
+  """
+  Auxiliar function to conntect secureley a DB and interrupt it, if
+  the user aborts operation with 'q'.
+  """
+  connection = connect_to_database()
+  if connection is None:
+    return
+
+  if args:
+    clear_screen()
+    print("\n[Out]:", args[0])
+
+  query_func(connection, *args, **kwargs)
+
 def start_query(default=sql_strings.show):
   """
   Starts a new query on the server side.
