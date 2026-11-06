@@ -301,10 +301,10 @@ def dump_html():
 
   columns = sql_strings.p_columnus
   df = pd.DataFrame(a_list, columns=columns)
-  display(df)
+  print(df)
 
   with open('dump.html', mode="w", encoding="utf-8") as a_file:
-    html = df.to_html()
+    html = df.to_html(index=False)
     a_file.write(html)
 
 def init_app():
