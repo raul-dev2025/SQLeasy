@@ -29,10 +29,9 @@ The process "delete_db" was canceled.
 """
 
 selectDb = """
-\tChose one of the available Databases\n
-\tby typing one, from the following list.\n
-\t- If the Database does not exist, create one before this action.
-
+      Chose one of the available Databases first
+      by typing one, from the following list.
+      If the Database does not exist, create one before this action.
 """
 
 wrongDb = """
