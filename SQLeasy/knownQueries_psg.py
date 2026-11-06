@@ -40,7 +40,7 @@ p_columnus = ['id', 'name', 'address', 'industry', 'location', 'postal_code', 'e
 q1 = simple_queries.default_query
 
 # SHOW DATABASES
-show = simple_queries.databases
+show = simple_queries.show_table
 
 # DATA BASES' NAMES
 dbNames = ['customers_db', 'dummy_db', 'postgres', 'information_schema', 
