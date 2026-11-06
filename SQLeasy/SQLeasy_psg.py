@@ -239,7 +239,7 @@ def insert_into_table():
   Use that to adjust the task.
   """
   connection = connect_to_database()
-  FreeCC.execute_query(connection, sql_strings.p_table)
+  FreeCC.execute_query(connection, sql_strings.insert_multiple)
 
   # separator
 
