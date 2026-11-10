@@ -139,7 +139,7 @@ def start_query(default=sql_strings.show):
     config.get('DB_PASS'),
     dbName
   )  
-  results = FreeCC.read_query(connection, sql_strings.show)
+  results = FreeCC.read_query(connection, default)
   for result in results:
     print(result)
 
@@ -207,14 +207,14 @@ def delete_DB():
 
     # separator
 
-def createTable():
+def createTable(default=sql_strings.client_table):
   """
   This method creates a table. As usual wrap the query fn() inside
   a python function-documentation block.
 
   :param default: not implemented yet.
   """
-  run_with_connection(FreeCC.execute_query, sql_strings.create_table)
+  run_with_connection(FreeCC.execute_query, default)
 
 def deleteTable():
   """
@@ -283,7 +283,7 @@ def modify_many_table():
     connection = connect_to_database()
     FreeCC.execute_list_query(connection, sql_strings.insert_multiple, sql_strings.val)
 
-def dump_html():
+def dump_html(default=sql_strings.q1):
   '''
   Specific to the Pandas library. Default's Pandas method requires a list of
   lists, as starting point to build the data frame(our database query). So
@@ -293,7 +293,7 @@ def dump_html():
   directly into a "dump.html" file.
   '''
   connection = connect_to_database()
-  results = FreeCC.read_query(connection, sql_strings.q1)
+  results = FreeCC.read_query(connection, default)
   a_list = []
   for result in results:
     result = list(result)
@@ -306,6 +306,8 @@ def dump_html():
   with open('dump.html', mode="w", encoding="utf-8") as a_file:
     html = df.to_html(index=False)
     a_file.write(html)
+
+  display_initiator.dump_html_styled('dump.html')
 
 def init_app():
     """
