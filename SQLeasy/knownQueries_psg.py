@@ -31,7 +31,7 @@ vault = '.hatch'
 # PANDAS COLUMNS
 # It should be consulted the table before; run a simple query to
 # get the column's name.
-p_columnus = ['id', 'name', 'address', 'industry', 'location', 'postal_code', 'email', 'notes', 'telephone', 'created', 'status']
+p_columnus = ['id', 'name', 'address', 'industry', 'location', 'postal_code', 'email', 'notes', 'telephone', 'created', 'client_type', 'status']
 
 ################################################
 ################### QUERIES ###################
