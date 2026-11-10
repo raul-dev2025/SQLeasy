@@ -22,10 +22,10 @@ create_clients_table = """
       address VARCHAR(100) NOT NULL,
       industry VARCHAR(40),
       location VARCHAR(40),
-      postal_code INT,
+      postal_code VARCHAR(10),
       email VARCHAR(100),
-      notes VARCHAR(100),
-      telephone INT,
+      notes VARCHAR(500),
+      telephone VARCHAR(20),
       created TIMESTAMP NOT NULL,
       status BOOLEAN NOT NULL DEFAULT TRUE
     );

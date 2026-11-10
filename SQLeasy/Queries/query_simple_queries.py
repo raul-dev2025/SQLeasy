@@ -49,3 +49,7 @@ q5 = """
     ON course.client = client.client_id
     WHERE course.in_school = FALSE;
 """
+
+q6 = """
+    SELECT id, name, status FROM clients;
+""" 
