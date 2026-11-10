@@ -282,6 +282,7 @@ def modify_many_table():
     """
     connection = connect_to_database()
     FreeCC.execute_list_query(connection, sql_strings.insert_multiple, sql_strings.val)
+    # run_with_connection(FreeCC.execute_list_query, sql_strings.insert_multiple, sql_strings.val)
 
 def dump_html(default=sql_strings.q1):
   '''
