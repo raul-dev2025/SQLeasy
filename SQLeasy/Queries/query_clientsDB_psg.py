@@ -27,6 +27,7 @@ create_clients_table = """
       notes VARCHAR(500),
       telephone VARCHAR(20),
       created TIMESTAMP NOT NULL,
+      client_type VARCHAR(30),
       status BOOLEAN NOT NULL DEFAULT TRUE
     );
 """
