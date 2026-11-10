@@ -5,6 +5,7 @@ from Queries import query_insert_delete_data as insert_queries
 from Queries import query_simple_queries as simple_queries
 from Queries import query_update_tables as update_queries
 from Queries import query_messages as messages_queries
+from Queries import query_fix_psg as fix_and_bugs
 
 from Queries import query_clientsDB_psg as dbClients
 
@@ -40,7 +41,7 @@ p_columnus = ['id', 'name', 'address', 'industry', 'location', 'postal_code', 'e
 q1 = simple_queries.default_query
 
 # SHOW DATABASES
-show = simple_queries.show_table
+show = simple_queries.q6
 
 # DATA BASES' NAMES
 dbNames = ['customers_db', 'dummy_db', 'postgres', 'information_schema', 
@@ -81,7 +82,10 @@ delete_entry = insert_queries.delete_registry
 # The data structures:
 insert_multiple = insert_queries.insert_multiple_queries
 
-val = [
+# Fix and bugs
+fix_entry = fix_and_bugs.fix_id
+
+val0 = [
     (7, 'Hunk', 'Dodson', 'ENG', None, '1991-12-23', 11111, '+09812734098'),
     (8, 'Funk', 'Bolson', 'EKR', 'ENG', '1491-15-16', 22222, '+09219014098')
 ]
