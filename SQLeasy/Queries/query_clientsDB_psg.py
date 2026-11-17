@@ -28,7 +28,7 @@ create_clients_table = """
       telephone VARCHAR(20),
       created TIMESTAMP NOT NULL,
       client_type VARCHAR(30),
-      status BOOLEAN NOT NULL DEFAULT TRUE
+      status BOOLEAN NOT NULL DEFAULT FALSE
     );
 """
 # one to many: one product to many clients!
@@ -38,7 +38,7 @@ create_clients_table = """
 # Tabla del catálogo de productos
 create_products_table = """
     CREATE TABLE products(
-      product_id SERIAL PRIMARY KEY,
+      id SERIAL PRIMARY KEY,
       product_name VARCHAR(40) NOT NULL,
       product_sku_num VARCHAR(20) NOT NULL,
       product_description VARCHAR(60) NOT NULL,
@@ -47,14 +47,14 @@ create_products_table = """
       product_tax INT,
       product_pvp decimal,
       product_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      product_status BOOLEAN NOT NULL DEFAULT TRUE
+      status BOOLEAN NOT NULL DEFAULT FALSE
     );
 """
 
 # Tabla de servicios disponibles
 create_services_table = """
     CREATE TABLE services(
-      service_id SERIAL PRIMARY KEY,
+      id SERIAL PRIMARY KEY,
       service_name VARCHAR(40) NOT NULL,
       product_sku_num VARCHAR(20) NOT NULL,
       service_description VARCHAR(60) NOT NULL,
@@ -63,7 +63,7 @@ create_services_table = """
       service_tax INT,
       service_pvp decimal,
       service_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      service_status BOOLEAN NOT NULL DEFAULT TRUE
+      status BOOLEAN NOT NULL DEFAULT FALSE
     );
 """
 
@@ -75,8 +75,8 @@ create_services_table = """
 # Tabla de ofertas comerciales vinculadas a clientes
 create_offers_table = """
     CREATE TABLE offers(
-      offer_id SERIAL PRIMARY KEY,
-      client INT DEFAULT NULL,
+      id SERIAL PRIMARY KEY,
+      client_id INT DEFAULT NULL,
       offer_name VARCHAR(40) NOT NULL,
       offer_description VARCHAR(60) NOT NULL,
       offer_price decimal,
@@ -84,15 +84,16 @@ create_offers_table = """
       offer_tax INT,
       offer_pvp decimal,
       offer_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      offer_status BOOLEAN NOT NULL DEFAULT TRUE
+      status BOOLEAN NOT NULL DEFAULT FALSE,
+      FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE SET NULL
     );
 """
 
 # Tabla de presupuestos
 create_budgets_table = """
     CREATE TABLE budgets(
-      budget_id SERIAL PRIMARY KEY,
-      client INT DEFAULT NULL,
+      id SERIAL PRIMARY KEY,
+      client_id INT DEFAULT NULL,
       budget_name VARCHAR(40) NOT NULL,
       budget_description VARCHAR(60) NOT NULL,
       budget_price decimal,
@@ -100,15 +101,16 @@ create_budgets_table = """
       budget_tax INT,
       budget_pvp decimal,
       offer_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      budget_status BOOLEAN NOT NULL DEFAULT TRUE
+      status BOOLEAN NOT NULL DEFAULT FALSE,
+      FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE SET NULL
     );
 """
 
 # Tabla de facturación(facturas)
 create_bills_table = """
     CREATE TABLE bills(
-      bill_id SERIAL PRIMARY KEY,
-      client INT DEFAULT NULL,
+      id SERIAL PRIMARY KEY,
+      client_id INT DEFAULT NULL,
       bill_name VARCHAR(40) NOT NULL,
       bill_description VARCHAR(60) NOT NULL,
       bill_price decimal,
@@ -116,15 +118,16 @@ create_bills_table = """
       bill_tax INT,
       bill_pvp decimal,
       offer_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      bill_status BOOLEAN NOT NULL DEFAULT TRUE
+      status BOOLEAN NOT NULL DEFAULT FALSE,
+      FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE SET NULL
     );
 """
 
 # Tabla de pedidos
 create_orders_table = """
     CREATE TABLE orders(
-      order_id SERIAL PRIMARY KEY,
-      client INT DEFAULT NULL,
+      id SERIAL PRIMARY KEY,
+      client_id INT DEFAULT NULL,
       order_name VARCHAR(40) NOT NULL,
       order_description VARCHAR(60) NOT NULL,
       order_price decimal,
@@ -132,15 +135,16 @@ create_orders_table = """
       order_tax INT,
       order_pvp decimal,
       offer_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      order_status BOOLEAN NOT NULL DEFAULT TRUE
+      status BOOLEAN NOT NULL DEFAULT FALSE,
+      FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE SET NULL
     );
 """
 
 # Tabla de albaranes de entrega
 create_delivery_notes_table = """
     CREATE TABLE delivery_notes(
-      dn_id SERIAL PRIMARY KEY,
-      client INT DEFAULT NULL,
+      id SERIAL PRIMARY KEY,
+      client_id INT DEFAULT NULL,
       dn_name VARCHAR(40) NOT NULL,
       dn_description VARCHAR(60) NOT NULL,
       dn_price decimal,
@@ -148,7 +152,8 @@ create_delivery_notes_table = """
       dn_tax INT,
       dn_pvp decimal,
       offer_last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      dn_status BOOLEAN NOT NULL DEFAULT TRUE
+      status BOOLEAN NOT NULL DEFAULT FALSE,
+      FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE SET NULL
     );
 """
 
@@ -156,26 +161,47 @@ create_delivery_notes_table = """
 create_hourly_pool_table = """
     CREATE TABLE bolsa_horas (
       id SERIAL PRIMARY KEY,
-      iguala_id INT REFERENCES iguala(id) ON DELETE CASCADE,
+      client_id INT NOT NULL,
+      tipo_bolsa INT NOT NULL CHECK (tipo_bolsa IN (10, 25, 50, 100)),
       horas_compradas NUMERIC(6,2) NOT NULL,
       horas_consumidas NUMERIC(6,2) DEFAULT 0.00,
       horas_restantes NUMERIC(6,2) GENERATED ALWAYS AS (horas_compradas - horas_consumidas) STORED,
-      periodo_mes INT NOT NULL,
-      periodo_anio INT NOT NULL,
-      fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      fecha_caducidad DATE NOT NULL,
+      status BOOLEAN DEFAULT FALSE,
+      fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
+    );
+"""
+
+# Tabla Hub central para asociar cualquier tipo de servicio/contrato al cliente
+create_client_contracts = """
+    CREATE TABLE contratos_cliente (
+      id SERIAL PRIMARY KEY,
+      client_id INT NOT NULL,
+      tipo_servicio VARCHAR(30) NOT NULL CHECK (tipo_servicio IN ('iguala_programada', 'iguala_indefinida', 'bolsa_horas', 'intervencion_ad_hoc')),
+      referencia_id INT NOT NULL,
+      estado VARCHAR(20) DEFAULT 'activo' CHECK (estado IN ('activo', 'pausado', 'finalizado', 'renovado')),
+      fecha_alta TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      observaciones TEXT,
+      FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
     );
 """
 
 # Tabla de registro de intervenciones técnicas presenciales o remotas
 create_interventions_table = """
-    CREATE TABLE intervenciones(
-      intervencion_id SERIAL PRIMARY KEY,
-      client INT DEFAULT NULL,
-      bolsa_id INT DEFAULT NULL,
+    CREATE TABLE intervenciones (
+      id SERIAL PRIMARY KEY,
+      client_id INT NOT NULL,
+      contrato_cliente_id INT DEFAULT NULL,
+      tipo_actuacion VARCHAR(30) CHECK (tipo_actuacion IN ('presencial', 'remota')),
       fecha_intervencion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      descripcion VARCHAR(100) NOT NULL,
-      horas_invertidas DECIMAL NOT NULL,
-      intervencion_status BOOLEAN NOT NULL DEFAULT TRUE
+      descripcion TEXT NOT NULL,
+      horas_reales_invertidas NUMERIC(5,2) NOT NULL,
+      horas_descontadas_o_facturadas NUMERIC(5,2) NOT NULL,
+      es_exceso BOOLEAN DEFAULT FALSE,
+      status BOOLEAN NOT NULL DEFAULT FALSE,
+      FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE,
+      FOREIGN KEY (contrato_cliente_id) REFERENCES contratos_cliente(id) ON DELETE SET NULL
     );
 """
 
@@ -183,14 +209,16 @@ create_interventions_table = """
 create_maintenance_contract_table = """
     CREATE TABLE iguala (
       id SERIAL PRIMARY KEY,
-      cliente_id INT NOT NULL,
-      concepto VARCHAR(150) NOT NULL,
-      horas_incluidas NUMERIC(5,2) DEFAULT 0.00,
+      client_id INT NOT NULL,
+      modalidad VARCHAR(30) NOT NULL CHECK (modalidad IN ('programada', 'indefinida')),
+      bloque_contratado VARCHAR(30) NOT NULL CHECK (bloque_contratado IN ('base_2h', 'estandar_5h', 'avanzado_10h')),
+      horas_incluidas NUMERIC(5,2) NOT NULL,
       tarifa_mensual NUMERIC(10,2) NOT NULL,
       fecha_inicio DATE NOT NULL,
       fecha_fin DATE,
-      activo BOOLEAN DEFAULT TRUE,
-      observaciones TEXT
+      status BOOLEAN DEFAULT FALSE,
+      observaciones TEXT,
+      FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
     );
 """
 
@@ -198,16 +226,17 @@ create_maintenance_contract_table = """
 create_emergencies_table = """
     CREATE TABLE urgencias (
       id SERIAL PRIMARY KEY,
-      cliente_id INT NOT NULL,
+      client_id INT NOT NULL,
+      intervencion_id INT DEFAULT NULL,
       fecha_aviso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       nivel_prioridad VARCHAR(20) CHECK (nivel_prioridad IN ('Alta', 'Critica', 'Urgente')),
       descripcion_incidencia TEXT NOT NULL,
       tiempo_respuesta_minutos INT,
       resuelta BOOLEAN DEFAULT FALSE,
-      intervencion_asociada_id INT REFERENCES intervenciones(id) ON DELETE SET NULL
+      FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE,
+      FOREIGN KEY (intervencion_id) REFERENCES intervenciones(id) ON DELETE SET NULL
     );
 """
-
 
 
 ################################################
