@@ -247,10 +247,7 @@ def delete_from_table():
 
   :param default: not implemented yet.
   """
-  connection = connect_to_database()
-  FreeCC.execute_query(connection, sql_strings.delete_entry)
-
-  # separator
+  run_with_connection(FreeCC.execute_query, sql_strings.delete_entry)
 
 def modify_table():
     """
