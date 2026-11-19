@@ -95,6 +95,7 @@ val0 = [
 ############### APPLICATION MESAGES ############
 ################################################
 msg_map = {
+    'init_app': messages_queries.init_app,
     'message': messages_queries.message,
     'chosedB': messages_queries.chosedB,
     'test_message': messages_queries.test_message,
@@ -102,6 +103,7 @@ msg_map = {
     'cancel_action': messages_queries.cancel_action,
     'selectDb': messages_queries.selectDb,
     'wrongDb': messages_queries.wrongDb,
+    'fail_con': messages_queries.connection_failed,
     'typeName': messages_queries.typeName
 }
 
