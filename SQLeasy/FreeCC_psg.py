@@ -21,11 +21,12 @@ def create_server_connection(host_name, user_name, user_pwd, dbName):
   connection.autocommit = True
   try:
     connection = psycopg2.connect(
-    host=host_name,
-    user=user_name,
-    password=user_pwd,
-    database=dbName,
-    gssencmode='disable'
+      client_encoding='UTF8',
+      host=host_name,
+      user=user_name,
+      password=user_pwd,
+      database=dbName,
+      gssencmode='disable'
     )
     print("PostgreSQL Database connection successful")
   except Error as err:
@@ -70,10 +71,11 @@ def create_db_connection(host_name, user_name, user_pwd, dbName):
   connection = None
   try:
       connection = psycopg2.connect(
-          host=host_name,
-          user=user_name,
-          password=user_pwd,
-          database=dbName
+        client_encoding='UTF8',
+        host=host_name,
+        user=user_name,
+        password=user_pwd,
+        database=dbName
       )
       print("PostgreSQL Database connection successful")
   except Error as err:
