@@ -238,10 +238,7 @@ def insert_into_table():
   The query saved as python string, is the main entry point.
   Use that to adjust the task.
   """
-  connection = connect_to_database()
-  FreeCC.execute_query(connection, sql_strings.insert_multiple)
-
-  # separator
+  run_with_connection(FreeCC.execute_query, sql_strings.insert_multiple)
 
 def delete_from_table():
   """
