@@ -257,8 +257,7 @@ def modify_table():
 
     :param default: not implemented yet.
     """
-    connection = connect_to_database()
-    FreeCC.execute_query(connection, qvar.orders_alters)
+    run_with_connection(FreeCC.execute_query, qvar.orders_alters)
     # placeHere_extra_calls(one per table). Just remember the correct selector.
     # ie:
     # import statement, connection definition(1), fn_call(many)
