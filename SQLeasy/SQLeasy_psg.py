@@ -305,12 +305,25 @@ def dump_html(default=sql_strings.q1):
 
   display_initiator.dump_html_styled('dump.html')
 
+# punto de entrada a la aplicacion
 def init_app():
-    """
-    1. Print the formatted message in columns.
-    2. Retrieve the options dictionary mapping numbers to functions.
-    3. Capture the user input option.
-    """
+  """
+  1. Print the formatted message in columns.
+  2. Retrieve the options dictionary mapping numbers to functions.
+  3. Capture the user input option within a persistent loop.
+  """
+  global active_connection
+  clear_screen()
+  print(sql_strings.init_app)
+  active_connection = connect_to_database()
+
+  if active_connection is None:
+    print(sql_strings.fail_con)
+    return
+
+  clear_screen()
+
+  while True:
     print(sql_strings.message)
     options = display_initiator.display_options()
     fn = input('>>> ')
@@ -318,16 +331,18 @@ def init_app():
     # Manejar la salida si el usuario pulsa 'q'
     if fn.lower() == 'q':
         print("Saliendo de SQLeasy...")
-        return
+        if active_connection:
+          active_connection.close()
+        break
 
     # Ejecutar la opción seleccionada si existe en el diccionario
     if fn in options:
         clear_screen()
         exec(options[fn])
-
+        input("\nPresiona Enter para continuar...")
+        clear_screen()
     else:
         print("Error: Opción no válida.")
-
 
 
 
