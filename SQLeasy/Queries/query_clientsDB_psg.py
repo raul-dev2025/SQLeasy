@@ -248,7 +248,7 @@ create_emergencies_table = """
 # DATE FOMAT: YYYY-MM-DD hh:mm:ss, or simply refer to now() to match with the actual date.
 # POSTAL CODE: This fileld can't start with Zero(0). It's a problem.
 insert_clients_table = """
-( NULL, 'name', 'addr', 'indust', 'loc', 08000, 'mail@str', 'notes', 6006060, now(), 1);
+( NULL, 'correcaminos', 'addr', 'indust', 'loc', '08000', 'mail@str', 'notes', 600600600, now(), 1);
 """
 # format CURRENT_TIMESTAMP: returns current date and time; YYYY-MM-DD hh:mm:ss.
 insert_products = """
