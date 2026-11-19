@@ -206,6 +206,7 @@ def delete_DB():
 
     # separator
 
+# Gestion de tablas
 def createTable(default=sql_strings.client_table):
   """
   This method creates a table. As usual wrap the query fn() inside
