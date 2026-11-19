@@ -1,6 +1,10 @@
 ################################################
 ############### APPLICATION MESAGES ############
 ################################################
+init_app = """
+=== Inicializando sesión de base de datos ===
+"""
+
 message = """
 You can do the following actions:
       1. Test connection        5. ConnectionDB         9. Insert into Table
@@ -22,6 +26,10 @@ test_message = """
 atention = """
 ATENTION! This action can NOT be UNDONE. \
 Do you want to proceed?
+"""
+
+connection_failed = """
+No se pudo establecer la conexión inicial. Saliendo...
 """
 
 cancel_action = """
