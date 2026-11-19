@@ -133,15 +133,12 @@ def start_query(default=sql_strings.show):
   :param default: default query. Positional, implicit named, called
     by omision.
   """
-  config = get_vault_config()
-  dbName = get_dbName()
-  connection = FreeCC.create_db_connection(
-    config.get('DB_HOST'),
-    config.get('DB_USER'),
-    config.get('DB_PASS'),
-    dbName
-  )  
-  results = FreeCC.read_query(connection, default)
+  global active_connection
+  if active_connection is None:
+    print(sql_strings.connection_failed)
+    return
+  
+  results = FreeCC.read_query(active_connection, default)
   for result in results:
     print(result)
 
