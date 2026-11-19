@@ -81,7 +81,6 @@ def test_connection():
 def connect_to_database(dbName=sql_strings.defaultdB):
   """
   Connect to available database.
-
   :param dbName: default value. Positional, implicit named, called
                  by omision.
   :param return: return connection.
@@ -116,15 +115,16 @@ def run_with_connection(query_func, *args, **kwargs):
   Auxiliar function to conntect secureley a DB and interrupt it, if
   the user aborts operation with 'q'.
   """
-  connection = connect_to_database()
-  if connection is None:
+  global active_connection
+  if active_connection is None:
+    print(sql_strings.connection_failed)
     return
 
   if args:
     clear_screen()
     print("\n[Out]:", args[0])
 
-  query_func(connection, *args, **kwargs)
+  query_func(active_connection, *args, **kwargs)
 
 def start_query(default=sql_strings.show):
   """
