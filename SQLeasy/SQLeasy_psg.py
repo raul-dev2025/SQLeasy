@@ -284,8 +284,12 @@ def dump_html(default=sql_strings.q1):
   This implementation is a "all-or-nothing" method, that writes the table
   directly into a "dump.html" file.
   '''
-  connection = connect_to_database()
-  results = FreeCC.read_query(connection, default)
+  global active_connection
+  if active_connection is None:
+    print(sql_strings.connection_failed)
+    return
+
+  results = FreeCC.read_query(active_connection, default)
   a_list = []
   for result in results:
     result = list(result)
