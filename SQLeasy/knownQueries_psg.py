@@ -6,8 +6,8 @@ from Queries import query_simple_queries as simple_queries
 from Queries import query_update_tables as update_queries
 from Queries import query_messages as messages_queries
 from Queries import query_fix_psg as fix_and_bugs
-
 from Queries import query_clientsDB_psg as dbClients
+from Tuplas import pymes as myTuple
 
 
 # This File is a map of known queries. To add new ones, just define a new variable
@@ -89,6 +89,8 @@ val0 = [
     (7, 'Hunk', 'Dodson', 'ENG', None, '1991-12-23', 11111, '+09812734098'),
     (8, 'Funk', 'Bolson', 'EKR', 'ENG', '1491-15-16', 22222, '+09219014098')
 ]
+
+val = myTuple.val
 
 
 ################################################
