@@ -4,6 +4,8 @@ import FreeCC_psg as FreeCC, display_initiator_psg as display_initiator
 import knownQueries_psg as sql_strings
 import Queries.query_alter_tables_psg as qvar
 
+active_connection = None
+
 # get_machine()
 # get_user()
 
