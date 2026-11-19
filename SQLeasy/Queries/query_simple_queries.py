@@ -38,7 +38,7 @@ show_tables = """
 show_table = """
 SELECT column_name, data_type
 FROM information_schema.columns
-WHERE table_name = 'nombre_de_la_tabla';
+WHERE table_name = 'clients';
 """
 
 # query JOIN
