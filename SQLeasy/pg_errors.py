@@ -100,5 +100,45 @@ def _format_data_error(err, sql=None, val=None):
   
   return f"DataError: {str(err).strip()}"
             
+def handle_pg_error(err, connection=None, sql=None, val=None, rollback=True):
+  """Handle psycopg2 exceptions centrally and return a clear diagnostic message.
 
+  Classifies psycopg2 exceptions from most specific to most general:
+  - psycopg2.DataError: Delegates to _format_data_error() for length overflow diagnostics.
+  - psycopg2.IntegrityError: Reports constraint violations (unique, foreign key, NOT NULL, etc.).
+  - psycopg2.ProgrammingError: Reports SQL syntax, missing object, or parameter mismatches.
+  - psycopg2.OperationalError: Reports connection, network, or server-level issues.
+  - psycopg2.InterfaceError: Reports misuse of the connection or cursor interface.
+  - psycopg2.DatabaseError / psycopg2.Error: Reports general database or PostgreSQL errors.
 
+  Args:
+      err: The raised exception instance.
+      connection: Optional psycopg2 connection used for transaction rollback.
+      sql: Optional SQL statement for diagnostic context.
+      val: Optional parameter values for diagnostic context.
+      rollback: Whether to roll back the transaction safely before formatting the error.
+
+  Returns:
+      str: Clear diagnostic summary for logging or error reporting.
+    """
+  if rollback:
+    _safe_rollback(connection)
+
+  detail = str(err).strip() if err is not None else ""
+
+  if isinstance(err, psycopg2.DataError):
+    return _format_data_error(err, sql=sql, val=val)
+  if isinstance(err, psycopg2.IntegrityError):
+    return f"IntegrityError (constraint overflow): {detail}"
+  if isinstance(err, psycopg2.ProgrammingError):
+    return f"ProgrammingError (SQL or schema issue): {detail}"
+  if isinstance(err, psycopg2.OperationalError):
+    return f"OperationalError (connection or server issue): {detail}"
+  if isinstance(err, psycopg2.InterfaceError):
+    return f"InterfaceError (connection or cursor usage): {detail}"
+  if isinstance(err, psycopg2.DatabaseError):
+    return f"DatabaseError: {detail}"
+  if isinstance(err, psycopg2.Error):
+    return f"PostgreSQL Error: {detail}"
+
+  return f"Unexpected Error ({type(err).__name__}): {detail}"
