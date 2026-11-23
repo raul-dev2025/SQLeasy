@@ -85,15 +85,20 @@ def test_connection():
 
   :param return: return connection.
   '''
+
   config = get_vault_config()
   connection = FreeCC.create_server_connection(
     config.get('DB_HOST'),
     config.get('DB_USER'),
     config.get('DB_PASS'),
-    get_dbName(),
+    get_dbName('postgres'),
   )
 
-  return connection
+  if connection is None:
+    return False
+
+  connection.close()
+  return True
 
 def connect_to_database(dbName=sql_strings.defaultdB):
   """
