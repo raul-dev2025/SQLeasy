@@ -173,7 +173,7 @@ def list_dataBases():
     print('\t', dbName)
     # print(dbNames.index(dbName), '-', dbName)
 
-def create_DB():
+def create_DB(db_name=None):
   """
   A method creates a database. As usual wrap the query fn() inside
   a python function-documentation block.
