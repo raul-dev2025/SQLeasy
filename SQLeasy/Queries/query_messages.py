@@ -6,6 +6,8 @@ init_app = """
 """
 
 message = """
+Active database: {active_db}
+
 You can do the following actions:
       1. Test connection        5. ConnectionDB         9. Insert into Table
       2. Start a new query      6. List Databases       10. Erase from Table
