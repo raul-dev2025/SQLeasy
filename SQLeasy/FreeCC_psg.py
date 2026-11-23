@@ -18,8 +18,7 @@ def create_server_connection(host_name, user_name, user_pwd, dbName):
   :paran user_name: user name.
   :paran user_pwd: idem as definition name.
   """
-  connection = psycopg2.connect(dbname="postgres", user=user_name, password=user_pwd, host=host_name)
-  connection.autocommit = True
+  connection = None
   try:
     connection = psycopg2.connect(
       client_encoding='UTF8',
@@ -29,10 +28,12 @@ def create_server_connection(host_name, user_name, user_pwd, dbName):
       database=dbName,
       gssencmode='disable'
     )
+    connection.autocommit = True
     print("PostgreSQL Database connection successful")
   except Error as err:
-    print(f"Error: '{err}'")
-
+    print(handle_pg_error(err, connection=connection, rollback=False))
+    connection = None
+  
   return connection
 
 ####### SECTION create new database #######
