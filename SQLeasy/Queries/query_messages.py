@@ -35,7 +35,7 @@ No se pudo establecer la conexión inicial. Saliendo...
 """
 
 cancel_action = """
-The process "delete_db" was canceled.
+The process was canceled by the user.
 """
 
 selectDb = """
