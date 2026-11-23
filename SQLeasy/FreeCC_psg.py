@@ -112,13 +112,21 @@ def execute_query(connection, query):
   use this execute_query() function. Read(or fetch) data is another way
   to do things, and requires another function by their own.
   '''
-  cursor = connection.cursor()
+  if connection is None:
+    print("Error: No active database connection.")
+    return
+
+  cursor = None
   try:
-      cursor.execute(query)
-      connection.commit()
-      print("Query successful")
+    cursor = connection.cursor()
+    cursor.execute(query)
+    connection.commit()
+    print("Query successful")
   except Error as err:
-      print(f"Error: '{err}'")
+    print(handle_pg_error(err, connection=connection, sql=query, rollback=True))
+  finally:
+    if cursor is not None:
+      cursor.close()
 
 ## READING DATA
 def read_query(connection, query):
