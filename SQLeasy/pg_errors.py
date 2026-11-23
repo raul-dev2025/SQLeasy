@@ -74,7 +74,31 @@ def _find_length_overflow(sql, val, max_length):
 
   return overflow
 
+def _format_data_error(err, sql=None, val=None):
+  """Format a psycopg2 DataError into a clear, actionable diagnostic message.
 
+  Args:
+      err: The DataError exception raised by psycopg2.
+      sql: Optional SQL statement associated with the failed execution.
+      val: Optional bound parameters associated with the failed execution.
 
+  Returns:
+      str: Formatted diagnostic message including overflow details when available.
+  """
+  max_length = _extract_max_length(err)
+  overflow = _find_length_overflow(sql, val, max_length)
+
+  if overflow:
+    details = [
+      f"column '{item['column']}' (row {item['row']}): length {item['length']} > max {item['max_length']}"
+      for item in overflow
+    ]
+    return f"DataError (length overflow): {'; '.join(details)} | Original error: {str(err).strip()}"
+
+  if max_length is not None:
+    return f"DataError (max length {max_length}): {str(err).strip()}"
+  
+  return f"DataError: {str(err).strip()}"
+            
 
 
