@@ -173,31 +173,33 @@ def list_dataBases():
     print('\t', dbName)
     # print(dbNames.index(dbName), '-', dbName)
 
-def replace_sql_cmd():
-  # file = sql_strings.file
-  sql_cmd = sql_strings.create_db
-  print(sql_strings.chosedB.format(sql_cmd))
-  list_dataBases()
-  dbName = input('>>> ')
-  if not isinstance(dbName, str):
-     print('Invalid entry...')
-  sql_cmd = sql_cmd.replace('dummy_db', dbName)
-
-  connection = test_connection()
-  FreeCC.create_database(connection, sql_cmd)
-  # print('[Out]: ', sql_cmd)
-
-
-  # return cursor
-
 def create_DB():
   """
   A method creates a database. As usual wrap the query fn() inside
   a python function-documentation block.
   """
-  replace_sql_cmd()
+  # file = sql_strings.file
+  sql_cmd = sql_strings.create_db
+  if db_name is None:
+    print(sql_strings.chosedB.format(sql_cmd))
+    list_dataBases()
+    user_input = input('>>> ').strip()
+    if not user_input or user_input.lower() == 'q':
+      print("\nCanceled action.")
+      return
+    db_name = user_input
 
-  # separator
+  sql_cmd = sql_cmd.replace('dummy_db', db_name)
+  connection = open_connection('postgres', server_level=True)
+
+  if connection is None:
+    return
+
+  try:
+    FreeCC.create_database(connection, sql_cmd)
+    print('[Out]: ', sql_cmd)
+  finally:
+    connection.close()
 
 def delete_DB():
   """
