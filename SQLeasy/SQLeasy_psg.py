@@ -61,6 +61,23 @@ def get_vault_config():
         
   return config
 
+def open_connection(db_name, server_level=False):
+  """
+  Open a conncection to the target database using vault credentials.
+  """
+  config = get_vault_config()
+  connector = (
+    FreeCC.create_server_connection
+    if server_level
+    else FreeCC.create_db_connection
+  )
+  return connector(
+    config.get('DB_HOST'),
+    config.get('DB_USER'),
+    config.get('DB_PASS'),
+    db_name,
+  )
+
 def test_connection():
   '''
   Test The SQL server state. Expected result: successful connection.
