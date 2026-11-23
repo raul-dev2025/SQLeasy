@@ -340,6 +340,25 @@ def dump_html(default=sql_strings.q1):
 
   display_initiator.dump_html_styled('dump.html')
 
+def get_active_db_label(connection, default_db=sql_strings.defaultdB):
+  """
+  Resolve the active database label for menu display.
+
+  :param connection: active PostgreSQL connection object or None.
+  :param default_db: default placeholder value from configuration.
+  :return: formatted database label string.
+  """
+  if connection is None:
+    return "NONE (Select a database first)"
+
+  info = getattr(connection, "info", None)
+  db_name = getattr(info, "dbname", None)
+
+  if not db_name or db_name == default_db:
+    return "NONE (Select a database first)"
+
+  return db_name
+
 # punto de entrada a la aplicacion
 def init_app():
   """
