@@ -178,10 +178,23 @@ def execute_list_query(connection, sql, val):
   :parm sql: the SQL command you are trying to run.
   :parm val: a list of Python tuples.
   """
-  cursor = connection.cursor()
+  if connection is None:
+    print("Error: No active database connection.")
+    return
+
+  cursor = None
   try:
+    cursor = connection.cursor()
     cursor.executemany(sql, val)
     connection.commit()
     print("Query successful")
   except Error as err:
-    print(f"Error: '{err}'")
+    print(handle_pg_error(
+      err,
+      connection=connection,
+      sql=sql,
+      val=val, 
+      rollback=True))
+  finally:
+    if cursor is not None:
+      cursor.close()
