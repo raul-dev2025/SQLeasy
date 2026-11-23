@@ -2,7 +2,7 @@
 ############### APPLICATION MESAGES ############
 ################################################
 init_app = """
-=== Inicializando sesión de base de datos ===
+=== DB Session initialization ===
 """
 
 message = """
