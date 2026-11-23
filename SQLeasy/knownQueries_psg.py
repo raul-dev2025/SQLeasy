@@ -18,7 +18,7 @@ from Tuplas import pymes as myTuple
 ################### DEFAULTS ###################
 ################################################
 # DEFAULT DATA BASE
-defaultdB = 'customers_db'
+defaultdB = 'None'
 
 # DEFAULT FILE
 file = 'birdOfFire.txt'
