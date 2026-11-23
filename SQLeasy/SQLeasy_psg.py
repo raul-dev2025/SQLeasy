@@ -201,7 +201,7 @@ def create_DB(db_name=None):
   finally:
     connection.close()
 
-def delete_DB():
+def delete_DB(db_name=None):
   """
   Delete the Data Base name. Defuaults to configuration variable
   defined in respective file. Look in documentation pages to refer it.
@@ -217,20 +217,31 @@ def delete_DB():
   :param pram: description param.
   """
   print(sql_strings.atention)
-  confirmation = input('>>> [y]/[n] >>>: '); print(confirmation)
-  if (confirmation == 'y'):
-    print(sql_strings.typeName)
-    dbName = prompt_user()
-    sql_cmd = sql_strings.delete_db
-    sql_cmd = sql_cmd.replace('dummy_db', dbName)
-    connection = test_connection()
-    FreeCC.execute_query(connection, sql_cmd)
-  else:
+  confirmation = input('>>> [y]/[n] >>>: ').strip().lower() 
+  if confirmation not in ('y', 'yes'):
     print(sql_strings.cancel_action)
+    return
+  
+  if db_name is None:
+    print(sql_strings.typeName)
+    list_dataBases()
+    user_input = input('>>> ').strip()
+    if not user_input or user_input.lower() == 'q':
+      print(sql_strings.cancel_action)
+      return
+    db_name = user_input
 
-    # separator
+  sql_cmd = sql_strings.delete_db.replace('dummy_db', db_name)
+  connection = open_connection('postgres', server_level=True)
+  if connection is None:
+    return
 
-# Gestion de tablas
+  try:
+    FreeCC.execute_query(connection, sql_cmd)
+    print('[Out]:', sql_cmd)
+  finally:
+    connection.close()
+
 def createTable(default=sql_strings.client_table):
   """
   This method creates a table. As usual wrap the query fn() inside
