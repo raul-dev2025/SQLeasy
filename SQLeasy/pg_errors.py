@@ -14,15 +14,23 @@ def _safe_rollback(connection):
     except Exception:
       pass
 
-_safe_rollback
+def _extract_max_length(err):
+  """Extract the maximum allowed length N from a character varying(N) or varchar(N) error.
 
-DataError
+  Args:
+      err: Exception instance or error message containing the length limit.
 
-IntegrityError
+  Returns:
+      int | None: The extracted length limit as an integer, or None if not found.
+  """
+  if err is None:
+    return None
 
-ProgrammingError
+  match = re.search(r"\b(?:character varying|varchar)\s*\(\s*(\d+)\s*\)", str(err), re.IGNORECASE)
+  if match:
+    return int(match.group(1))
 
-OperationalError
+  return None
 
 InterfaceError
 
