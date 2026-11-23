@@ -1,10 +1,11 @@
 import psycopg2
 from psycopg2 import Error
-# import pandas as pd
+from pg_errors import handle_pg_error
 
-##############################################
+
+#################################################
 ####### FreeCodeCamp - tutorial FreeCC.py #######
-##############################################
+#################################################
 
 ####### connect to the serer and create database #######
 def create_server_connection(host_name, user_name, user_pwd, dbName):
