@@ -85,11 +85,13 @@ def create_db_connection(host_name, user_name, user_pwd, dbName):
         host=host_name,
         user=user_name,
         password=user_pwd,
-        database=dbName
+        database=dbName,
+        gssencmode='disable'
       )
       print("PostgreSQL Database connection successful")
   except Error as err:
-      print(f"Error: '{err}'")
+      print(handle_pg_error(err, connection=connection, rollback=False))
+      connection = None
 
   return connection
 
