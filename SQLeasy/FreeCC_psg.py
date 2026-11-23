@@ -51,12 +51,20 @@ def create_database(connection, query):
   :param query: python simple string. Save any PostgreSQL valid query to
                 modify the defaul value.
   '''
-  cursor = connection.cursor()
+  if connection is None:
+    print("Error: No active database connection.")
+    return
+
+  cursor = None  
   try:
-      cursor.execute(query)
-      print("Database created successfully")
+    cursor = connection.cursor()
+    cursor.execute(query)
+    print("Database created successfully")
   except Error as err:
-      print(f"Error: '{err}'")
+    print(handle_pg_error(err, connection=connection, sql=query, rollback=False))
+  finally:
+    if cursor is not None:
+      cursor.close()
 
 ####### SECTION modify server connectionfunction #######
 def create_db_connection(host_name, user_name, user_pwd, dbName):
