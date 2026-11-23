@@ -138,14 +138,24 @@ def read_query(connection, query):
   :param query: those qN* SQL functions, writed as a simple string. I.e:
                 "SELECT * FROM clients"
   '''
-  cursor = connection.cursor()
+  if connection is None:
+    print("Error: No active database connection.")
+    return None
+
+  cursor = None
   result = None
   try:
+    cursor = connection.cursor()
     cursor.execute(query)
-    result = cursor.fetchall()
-    return result
+    result = cursor.fetchall()    
   except Error as err:
-    print(f"Error: '{err}'")
+    print(handle_pg_error(err, connection=connection, sql=query, rollback=True))
+    result = None
+  finally:
+    if cursor is not None:
+      cursor.close()
+
+  return result
 
 def execute_list_query(connection, sql, val):
   """
