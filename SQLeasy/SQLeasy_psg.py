@@ -378,7 +378,8 @@ def init_app():
   clear_screen()
 
   while True:
-    print(sql_strings.message)
+    active_db_label = get_active_db_label(active_connection)
+    print(sql_strings.message.format(active_db=active_db_label))
     options = display_initiator.display_options()
     fn = input('>>> ')
 
