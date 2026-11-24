@@ -63,7 +63,7 @@ def get_vault_config():
 
 def open_connection(db_name, server_level=False):
   """
-  Open a conncection to the target database using vault credentials.
+  Open a connection to the target database using vault credentials.
   """
   config = get_vault_config()
   connector = (
