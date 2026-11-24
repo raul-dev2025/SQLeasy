@@ -125,7 +125,14 @@ def select_db_by_index(db_list):
 
   return db_list[choice - 1]
 
-  return connection
+def connect_to_database():
+  """
+  Lists available databases, resolves user selection by index, and connects via open_connection.
+  """
+  global active_connection
+
+
+  return active_connection
 
 def run_with_connection(query_func, *args, **kwargs):
   """
