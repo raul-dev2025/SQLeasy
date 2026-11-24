@@ -314,8 +314,11 @@ def delete_DB(db_name=None):
     return
 
   print(sql_strings.atention)
-  confirmation = input('>>> [y]/[n] >>>: ').strip().lower() 
-  if confirmation not in ('y', 'yes'):
+  confirm_choice = (
+      input(f"Do you want to delete db {db_name}? [y|yes] / [n|no]: ")
+      .strip()
+      .lower()
+  )
     print(sql_strings.cancel_action)
     return
   
