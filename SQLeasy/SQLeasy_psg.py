@@ -330,6 +330,9 @@ def delete_DB(db_name=None):
     print(sql_strings.cancel_action)
     return
 
+  sql_cmd = sql_strings.delete_db.replace("dummy_db", db_name)
+  conncection = open_connection("postgres", server_level=True)
+  if conncection is None:
     return
 
   try:
