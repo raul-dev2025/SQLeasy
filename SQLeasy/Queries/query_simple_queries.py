@@ -10,6 +10,24 @@ databases = """
     WHERE datistemplate = false;
 """
 
+user_databases = """
+    SELECT datname
+    FROM pg_database
+    WHERE datistemplate = false
+    AND datname NOT IN (
+      'autoupdate',
+      'mediaserver',
+      'ong',
+      'synosnmp',
+      'synophoto',
+      'video_metadata',
+      'synoindex',
+      'download',
+      'mediaserver_ascii'
+    )
+    ORDER BY datname;
+"""
+
 # FILTERING DATABASES LIST, using SHOW DATABASES LIKE
 #    SHOW {DATABASES | SCHEMAS}
 #    [LIKE 'pattern' | WHERE expression]
