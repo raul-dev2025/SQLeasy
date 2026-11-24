@@ -290,11 +290,15 @@ def delete_DB(db_name=None):
   """
   PROTECTED_DBS = {"postgres"}
 
-  A confirmation message pop-up, requiring your ATENTION. Possible answers
-  expected <[y], [yes], [Y], [YES]>. No defaults yet implemented, white
-  blanks, carriage return, or break commands should be ignored. Other
-  values <[n], [no], [N], [NO]> will be considered as a negative answer
-  in the same way.
+  if db_name is None:
+    db_list = list_dataBases()
+    if not db_list:
+      return
+  
+    db_name = select_db_by_index(db_list)
+    if not db_name:
+      return
+
 
   :param pram: description param.
   """
