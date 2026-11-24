@@ -331,13 +331,13 @@ def delete_DB(db_name=None):
     return
 
   sql_cmd = sql_strings.delete_db.replace("dummy_db", db_name)
-  conncection = open_connection("postgres", server_level=True)
-  if conncection is None:
+  connection = open_connection("postgres", server_level=True)
+  if connection is None:
     return
 
   try:
     FreeCC.execute_query(connection, sql_cmd)
-    print('[Out]:', sql_cmd)
+    print("[Out]:", sql_cmd)
   finally:
     connection.close()
 
