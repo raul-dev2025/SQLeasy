@@ -212,6 +212,12 @@ def _get_active_db_name(conn):
   if conn is None:
     return None
 
+  info = getattr(conn, "info", None)
+  if info is not None:
+    db_name = getattr(info, "dbname", None)
+    if db_name:
+      return db_name
+
 
   return None
 
