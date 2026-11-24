@@ -304,6 +304,14 @@ def delete_DB(db_name=None):
     print(sql_strings.cancel_action)
     return
 
+  active_db = _get_active_db_name(active_connection)
+  if active_db == db_name:
+    print(
+        f"Database '{db_name}' is currently active. Switch to another"
+        " database before deleting it."
+    )
+    print(sql_strings.cancel_action)
+    return
 
   :param pram: description param.
   """
