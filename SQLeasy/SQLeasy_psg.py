@@ -100,7 +100,7 @@ def test_connection():
   connection.close()
   return True
 
-def connect_to_database(dbName=sql_strings.defaultdB):
+def select_db_by_index(db_list):
   """
   Connect to available database.
   :param dbName: default value. Positional, implicit named, called
