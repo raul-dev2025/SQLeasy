@@ -271,8 +271,9 @@ def create_DB(db_name=None):
     db_name = user_input
 
   sql_cmd = sql_cmd.replace('dummy_db', db_name)
-  connection = open_connection('postgres', server_level=True)
+  print(f"Prepared SQL: {sql_cmd}")
 
+  connection = open_connection('postgres', server_level=True)
   if connection is None:
     return
 
