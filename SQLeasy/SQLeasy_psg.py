@@ -238,6 +238,13 @@ def list_dataBases():
   col_width = 25
   row = []
 
+  for idx, db_name in enumerate(db_list, start=1):
+    label = f"  {idx}. {db_name}"
+    if len(label) > col_width:
+      label = f"{label[: col_width -2]}.."
+    cell = label.ljust(col_width)
+    row.append(cell)
+
   if row:
     print("".join(row))
 
