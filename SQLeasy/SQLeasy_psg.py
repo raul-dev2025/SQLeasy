@@ -245,6 +245,10 @@ def list_dataBases():
     cell = label.ljust(col_width)
     row.append(cell)
 
+    if len(row) == 3:
+      print("".join(row))
+      row = []
+
   if row:
     print("".join(row))
 
