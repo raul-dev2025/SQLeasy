@@ -323,9 +323,13 @@ def delete_DB(db_name=None):
     print(sql_strings.cancel_action)
     return
 
-  sql_cmd = sql_strings.delete_db.replace('dummy_db', db_name)
-  connection = open_connection('postgres', server_level=True)
-  if connection is None:
+  typed_name = input(
+      "Type the full name of the data base you want to delete: "
+  ).strip()
+  if typed_name != db_name:
+    print(sql_strings.cancel_action)
+    return
+
     return
 
   try:
