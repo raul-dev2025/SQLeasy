@@ -259,11 +259,11 @@ def create_DB(db_name=None):
   A method creates a database. As usual wrap the query fn() inside
   a python function-documentation block.
   """
-  # file = sql_strings.file
   sql_cmd = sql_strings.create_db
+
   if db_name is None:
     print(sql_strings.chosedB.format(sql_cmd))
-    list_dataBases()
+    print(f"sql template: {sql_cmd}")
     user_input = input('>>> ').strip()
     if not user_input or user_input.lower() == 'q':
       print("\nCanceled action.")
