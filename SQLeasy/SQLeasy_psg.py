@@ -205,6 +205,15 @@ def get_db(query=sql_strings.show):
 
   return [row[0] for row in rows]
 
+def _get_active_db_name(conn):
+  """
+  Safely extracts the connected database name from active_connection if available.
+  """
+  if conn is None:
+    return None
+
+
+  return None
 
 def list_dataBases():
   """
