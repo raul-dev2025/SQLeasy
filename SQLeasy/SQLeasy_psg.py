@@ -102,14 +102,11 @@ def test_connection():
 
 def select_db_by_index(db_list):
   """
-  Connect to available database.
-  :param dbName: default value. Positional, implicit named, called
-                 by omision.
-  :param return: return connection.
+  Prompts for a 1-based database index from db_list and returns the database name.
+  Prints sql_strings.cancel_action and returns None on empty/invalid/out-of-range input.
   """
-  print(sql_strings.selectDb)
-  list_dataBases()
-  userInput = input('>>> ')
+  if not db_list:
+    return None
 
   if userInput.lower() == 'q':
     print("\nCanceled action.")
