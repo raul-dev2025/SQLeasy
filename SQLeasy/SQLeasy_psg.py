@@ -108,8 +108,15 @@ def select_db_by_index(db_list):
   if not db_list:
     return None
 
-  if userInput.lower() == 'q':
-    print("\nCanceled action.")
+  raw_choice = input(f"Select DataBase (1-{len(db_list)}): ").strip()
+  if not raw_choice:
+    print(sql_strings.cancel_action)
+    return None
+  
+  try:
+    choice = int(raw_choice)
+  except ValueError:
+    print(sql_strings.cancel_action)
     return None
 
   target_db = userInput if userInput else dbName
