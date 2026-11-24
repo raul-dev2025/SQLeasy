@@ -319,17 +319,9 @@ def delete_DB(db_name=None):
       .strip()
       .lower()
   )
+  if confirm_choice not in ("y", "yes"):
     print(sql_strings.cancel_action)
     return
-  
-  if db_name is None:
-    print(sql_strings.typeName)
-    list_dataBases()
-    user_input = input('>>> ').strip()
-    if not user_input or user_input.lower() == 'q':
-      print(sql_strings.cancel_action)
-      return
-    db_name = user_input
 
   sql_cmd = sql_strings.delete_db.replace('dummy_db', db_name)
   connection = open_connection('postgres', server_level=True)
