@@ -182,6 +182,19 @@ def start_query(default=sql_strings.show):
   for result in results:
     print(result)
 
+def get_db(query=sql_strings.show):
+  global active_connection
+
+  temp_connection = None
+  conn = active_connection
+
+  if conn is None:
+    temp_connection = open_connection('postgres', server_level=True)
+    if temp_connection is None:
+      return []
+    conn = temp_connection
+
+
 def list_dataBases():
   """
   Loops in a database list.
