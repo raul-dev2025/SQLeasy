@@ -299,6 +299,11 @@ def delete_DB(db_name=None):
     if not db_name:
       return
 
+  if db_name in PROTECTED_DBS:
+    print(f"Cannot delete protected database '{db_name}'.")
+    print(sql_strings.cancel_action)
+    return
+
 
   :param pram: description param.
   """
