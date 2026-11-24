@@ -194,6 +194,17 @@ def get_db(query=sql_strings.show):
       return []
     conn = temp_connection
 
+  try:
+    rows = FreeCC.read_query(conn, query)
+  finally:
+    if temp_connection is not None:
+      temp_connection.close()
+
+  if not rows:
+    return []
+
+  return [row[0] for row in rows]
+
 
 def list_dataBases():
   """
