@@ -218,6 +218,11 @@ def _get_active_db_name(conn):
     if db_name:
       return db_name
 
+  dsn = getattr(conn, "dsn", None)
+  if isinstance(dsn, str) and "dbname=" in dsn:
+    for part in dsn.split():
+      if part.startswith("dbname="):
+        return part.split("=", 1)[1]
 
   return None
 
