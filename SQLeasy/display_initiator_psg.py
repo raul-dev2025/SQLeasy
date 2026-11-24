@@ -6,7 +6,6 @@ def counter_iterator(x):
     yield x
     x = x + 1
 
-
 def list_fn(n=1):
   path = os.path.dirname(__file__)
   file_path = os.path.join(path, 'modAttr.py')
@@ -15,7 +14,6 @@ def list_fn(n=1):
     counter = counter_iterator(n)
     for fn in functions:
       file.write('{} {}()\n'.format(next(counter), fn))
-
 
 def dump_html_styled(target_file='dump.html'):
     '''
@@ -52,7 +50,6 @@ def dump_html_styled(target_file='dump.html'):
 
     with open(target_file, 'w', encoding='utf-8') as f:
         f.write(full_html)
-
 
 def display_options():
   """
