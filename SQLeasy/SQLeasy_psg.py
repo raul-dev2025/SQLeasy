@@ -119,20 +119,11 @@ def select_db_by_index(db_list):
     print(sql_strings.cancel_action)
     return None
 
-  target_db = userInput if userInput else dbName
+  if choice < 1 or choice > len(db_list):
+    print(sql_strings.wrongDb)
+    return None
 
-  if (target_db in sql_strings.dbNames):
-    config = get_vault_config()
-    connection = FreeCC.create_db_connection(
-      config.get('DB_HOST'),
-      config.get('DB_USER'),
-      config.get('DB_PASS'),
-      target_db
-    )
-    print('\t{} Connection established'.format(target_db))
-  else:
-    print(sql_strings.wrongDb, '', target_db)
-    connection = None
+  return db_list[choice - 1]
 
   return connection
 
