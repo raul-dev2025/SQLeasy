@@ -17,8 +17,9 @@ You can do the following actions:
 """
 
 chosedB = """
-Type the Data Base to update the SQL command
-or chose one in the list:\n{}"""
+    Create a new database by entering a name
+    'q' or empty to cancel.
+"""
 
 test_message = """
     This is a test message with formated text, ready to get displayed \
