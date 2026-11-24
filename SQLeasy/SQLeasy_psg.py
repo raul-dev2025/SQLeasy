@@ -285,10 +285,10 @@ def create_DB(db_name=None):
 
 def delete_DB(db_name=None):
   """
-  Delete the Data Base name. Defuaults to configuration variable
-  defined in respective file. Look in documentation pages to refer it.
-  From your configutation file you can adapt the message to your special
-  needs, including this note.
+    Deletes a database after index selection, protected/active DB checks,
+    and two-step confirmation (y/yes + exact database name). 283 - 322
+  """
+  PROTECTED_DBS = {"postgres"}
 
   A confirmation message pop-up, requiring your ATENTION. Possible answers
   expected <[y], [yes], [Y], [YES]>. No defaults yet implemented, white
