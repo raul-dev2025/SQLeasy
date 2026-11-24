@@ -230,10 +230,13 @@ def list_dataBases():
   """
   Loops in a database list.
   """
-  # global dbNames
-  for dbName in sql_strings.dbNames:
-    print('\t', dbName)
-    # print(dbNames.index(dbName), '-', dbName)
+  db_list = get_db()
+  if not db_list:
+    print("No databases available")
+    return []
+  
+
+  return db_list
 
 def create_DB(db_name=None):
   """
