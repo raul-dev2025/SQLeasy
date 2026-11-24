@@ -235,6 +235,11 @@ def list_dataBases():
     print("No databases available")
     return []
   
+  col_width = 25
+  row = []
+
+  if row:
+    print("".join(row))
 
   return db_list
 
