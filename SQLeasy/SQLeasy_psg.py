@@ -131,6 +131,22 @@ def connect_to_database():
   """
   global active_connection
 
+  db_list = list_dataBases()
+  if not db_list:
+    return
+
+  selected_db = select_db_by_index(db_list)
+  if not selected_db:
+    return
+
+  new_conn = open_connection(selected_db)
+  if new_conn is None:
+    return
+
+  if active_connection is not None and active_connection is not new_conn:
+    active_connection.close()
+
+  active_connection = new_conn
 
   return active_connection
 
