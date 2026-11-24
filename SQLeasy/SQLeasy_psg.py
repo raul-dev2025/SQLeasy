@@ -313,8 +313,6 @@ def delete_DB(db_name=None):
     print(sql_strings.cancel_action)
     return
 
-  :param pram: description param.
-  """
   print(sql_strings.atention)
   confirmation = input('>>> [y]/[n] >>>: ').strip().lower() 
   if confirmation not in ('y', 'yes'):
