@@ -71,9 +71,9 @@ def connect_to_database():
   """
   Lists available databases, resolves user selection by index, and connects via open_connection.
   """
+  from db_admin import list_dataBases, select_db_by_index
   global active_connection
-  from SQLeasy_psg import list_dataBases, select_db_by_index
-
+  
   db_list = list_dataBases()
   if not db_list:
     return None
