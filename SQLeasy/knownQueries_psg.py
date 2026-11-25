@@ -55,7 +55,6 @@ delete_db = db_queries.delete_db
 
 # CREATE TABLE
 create_table = table_queries.create_table
-client_table = dbClients.create_clients_table
 
 # DELETE TABLE
 delete_table = table_queries.delete_table
@@ -65,6 +64,7 @@ delete_multiple_tables = table_queries.delete_multiple_tables
 
 # ALTER TABLES
 alter_table = alter_queries.table_alters
+orders_alter = alter_queries.orders_alters
 
 # Populate tables
 p_table = insert_queries.populate_table
