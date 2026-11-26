@@ -70,4 +70,32 @@ q5 = """
 
 q6 = """
     SELECT id, name, status FROM clients;
-""" 
+"""
+
+pendientes = """
+    SELECT
+      id,
+      name,
+      CONCAT_WS(
+        ', ',
+        CASE WHEN LOWER(TRIM(address)) = 'pendiente' THEN 'address' END,
+        CASE WHEN LOWER(TRIM(industry)) = 'pendiente' THEN 'industry' END,
+        CASE WHEN LOWER(TRIM(location)) = 'pendiente' THEN 'location' END,
+        CASE WHEN LOWER(TRIM(postal_code)) = 'pendiente' THEN 'postal_code' END,
+        CASE WHEN LOWER(TRIM(email)) = 'pendiente' THEN 'email' END,
+        CASE WHEN LOWER(TRIM(notes)) = 'pendiente' THEN 'notes' END,
+        CASE WHEN LOWER(TRIM(telephone)) = 'pendiente' THEN 'telephone' END,
+        CASE WHEN LOWER(TRIM(client_type)) = 'pendiente' THEN 'client_type' END
+      ) AS campos_pendientes
+    FROM clients
+    WHERE
+      LOWER(TRIM(name)) = 'pendiente'
+      OR LOWER(TRIM(address)) = 'pendiente'
+      OR LOWER(TRIM(industry)) = 'pendiente'
+      OR LOWER(TRIM(location)) = 'pendiente'
+      OR LOWER(TRIM(postal_code)) = 'pendiente'
+      OR LOWER(TRIM(email)) = 'pendiente'
+      OR LOWER(TRIM(notes)) = 'pendiente'
+      OR LOWER(TRIM(telephone)) = 'pendiente'
+"""
+
