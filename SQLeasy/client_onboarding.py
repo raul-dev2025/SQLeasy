@@ -17,7 +17,6 @@ def registrar_cliente_con_contrato(connection, datos_cliente, datos_contrato=Non
             datos_cliente.get('email'),
             datos_cliente.get('notes'),
             datos_cliente.get('telephone'),
-            datos_cliente['created'],
             datos_cliente.get('client_type'),
             datos_cliente.get('status', True)
         ))
