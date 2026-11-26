@@ -1,7 +1,7 @@
 # Inserción de los datos maestros del cliente
 query_cliente = """
     INSERT INTO clients (name, address, industry, location, postal_code, email, notes, telephone, created, client_type, status)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, %s, %s)
     RETURNING id;
 """
 # Si se aporta un contrato inicial, procesarlo
