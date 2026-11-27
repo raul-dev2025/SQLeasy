@@ -14,7 +14,7 @@
 # client_id, client_name, client_address, client_industry, client_location,
 # client_postal_code, client_email, client_notes, client_telephone,
 # client_created, client_status
-# Tabla principal de clientes y datos de contacto
+# Tabla principal de CLIENTES y datos de contacto
 create_clients_table = """
     CREATE TABLE clients(
       id SERIAL PRIMARY KEY,
@@ -35,7 +35,7 @@ create_clients_table = """
 # If you want to know which product belongs to which provaider
 # you must start a query aginst the provaiderDB. So product_sku_num
 # is the key here.
-# Tabla del catálogo de productos
+# Tabla del catálogo de PRODUCTOS
 create_products_table = """
     CREATE TABLE products(
       id SERIAL PRIMARY KEY,
@@ -51,7 +51,7 @@ create_products_table = """
     );
 """
 
-# Tabla de servicios disponibles
+# Tabla de SERVICIOS disponibles
 create_services_table = """
     CREATE TABLE services(
       id SERIAL PRIMARY KEY,
@@ -72,7 +72,7 @@ create_services_table = """
 # recives the 'foreign key' IT MUST EXIST, before stablish
 # the cross reference. In this case it's wanted to reference
 # the client table, so it is added a client field on each table.
-# Tabla de ofertas comerciales vinculadas a clientes
+# Tabla de OFERTAS comerciales vinculadas a clientes
 create_offers_table = """
     CREATE TABLE offers(
       id SERIAL PRIMARY KEY,
@@ -89,7 +89,7 @@ create_offers_table = """
     );
 """
 
-# Tabla de presupuestos
+# Tabla de PRESUPUESTOS
 create_budgets_table = """
     CREATE TABLE budgets(
       id SERIAL PRIMARY KEY,
@@ -106,7 +106,7 @@ create_budgets_table = """
     );
 """
 
-# Tabla de facturación(facturas)
+# Tabla de facturación(FACTURAS)
 create_bills_table = """
     CREATE TABLE bills(
       id SERIAL PRIMARY KEY,
@@ -123,7 +123,7 @@ create_bills_table = """
     );
 """
 
-# Tabla de pedidos
+# Tabla de PEDIDOS
 create_orders_table = """
     CREATE TABLE orders(
       id SERIAL PRIMARY KEY,
@@ -140,7 +140,7 @@ create_orders_table = """
     );
 """
 
-# Tabla de albaranes de entrega
+# Tabla de ALBARANES de entrega
 create_delivery_notes_table = """
     CREATE TABLE delivery_notes(
       id SERIAL PRIMARY KEY,
@@ -157,7 +157,7 @@ create_delivery_notes_table = """
     );
 """
 
-# Tabla de control de bolsa de horas y consumo de saldo
+# Tabla de control de BOLSA DE HORAS y consumo de saldo
 create_hourly_pool_table = """
     CREATE TABLE bolsa_horas (
       id SERIAL PRIMARY KEY,
