@@ -74,10 +74,8 @@ insert_multiple = insert_queries.insert_multiple_dummy
 # To update data. LIBRERÍA: query_update_tables
 update_query = update_queries.update_id
 
-val0 = [
-    (7, 'Hunk', 'Dodson', 'ENG', None, '1991-12-23', 11111, '+09812734098'),
-    (8, 'Funk', 'Bolson', 'EKR', 'ENG', '1491-15-16', 22222, '+09219014098')
-]
+# Fix and bugs. LIBRERÍA: query_fix_psg
+fix_entry = fix_and_bugs.fix_id
 
 val = myTuple.val
 
