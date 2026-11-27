@@ -69,7 +69,7 @@ p_table = insert_queries.populate_table
 delete_entry = insert_queries.delete_registry
 
 # Insert multiple values. LIBRERÍA: query_insert_delete_data
-insert_multiple = insert_queries.insert_multiple_dummy
+insert_multiple = insert_queries.insert_multiple_queries
 
 # To update data. LIBRERÍA: query_update_tables
 update_query = update_queries.update_id
