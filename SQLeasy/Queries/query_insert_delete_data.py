@@ -53,3 +53,44 @@ delete_multiple = """
     DELETE FROM dummy_table WHERE dummy_id = 2;
     DELETE FROM dummy_table WHERE dummy_id = 3;
 """
+
+################################################
+############### TABLE INSERTS ##################
+################################################
+# client_id, client_name, client_address, client_industry, client_location,
+# client_postal_code, client_email, client_notes, client_telephone,
+# client_created, client_status
+# DATE FOMAT: YYYY-MM-DD hh:mm:ss, or simply refer to now() to match with the actual date.
+# POSTAL CODE: This fileld can't start with Zero(0). It's a problem.
+insert_clients_table = """
+( NULL, 'correcaminos', 'addr', 'indust', 'loc', '08000', 'mail@str', 'notes', 600600600, now(), 1);
+"""
+# format CURRENT_TIMESTAMP: returns current date and time; YYYY-MM-DD hh:mm:ss.
+insert_products = """
+( NULL, 'name', '123AA89-99z', 'description', 1.99, 20, 16, 200.42, NULL, 1)
+"""
+
+insert_services = """
+(NULL, 'name', 12345AA-ff3R, 'description', 17.42, 20, 16, 200.42, 0)
+"""
+
+insert_offers = """
+(NULL, 10, 'name', 'description', 17.42, 25, 16, 200.17, 1)
+"""
+
+insert_budgets = """
+(NULL, 10, 'name', 'description', 17.42, 20, 16, 200.42, 0)
+"""
+
+insert_bills = """
+(NULL, 10, 'name', 'description', 17.42, 20, 16, 200.42, 1)
+"""
+
+insert_orders = """
+(NULL, 10, 'name', 'description', 17.42, 20, 16, 200.42, 1)
+"""
+
+insert_dn = """
+(NULL, 10, 'name', 'description', 17.42, 20, 16, 200.42, 1)
+"""
+

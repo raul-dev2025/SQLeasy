@@ -1,7 +1,7 @@
 # DEFAULT QUERY
 default_query = """
     SELECT *
-    FROM dummy_table
+    FROM clients
 """
 
 databases = """
