@@ -13,7 +13,7 @@ You can do the following actions:
       2. Start a new query      6. List Databases       10. Erase from Table
       3. Create DataBase        7. Create Table         11. Python structures
       4. Delete DataBase        8. Delete Table         12. Dump Html
-                q. Exit                         0. List saved queries
+                q. Exit                    0. Check duplicate records
 """
 
 chosedB = """
