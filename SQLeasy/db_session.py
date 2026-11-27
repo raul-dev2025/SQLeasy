@@ -1,6 +1,5 @@
 import os
-import FreeCC_psg as FreeCC
-import knownQueries_psg as sql_strings
+import FreeCC_psg as FreeCC, knownQueries_psg as sql_strings
 
 active_connection = None
 
@@ -103,7 +102,7 @@ def run_with_connection(query_func, *args, **kwargs):
     return
 
   if args:
-    from SQLeasy_psg import clear_screen
+    from cli_app import clear_screen
     clear_screen()
     print("\n[Out]:", args[0])
 
