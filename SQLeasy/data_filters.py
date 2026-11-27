@@ -93,3 +93,14 @@ def format_matches(matches):
     formatted_lines.append(line)
 
   return formatted_lines
+
+def write_matches_log(formatted_lines, file_name):
+  """
+  Escribe las líneas formateadas en un archivo de log y avisa por consola.
+  """
+  with open(file_name, "a", encoding="UTF-8") as log_file:
+    for line in formatted_lines:
+      log_file.write(f"{line}\n")
+
+  print(f"Puede consultar el log en {file_name}")
+  return file_name
