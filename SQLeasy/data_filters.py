@@ -74,6 +74,12 @@ def find_duplicates(candidates, existing_rows):
 
   return matches
 
+def format_matches(matches):
+  """
+  Formatea la lista de coincidencias estructuradas en líneas legibles o devuelve un mensaje si está vacía.
+  """
+  if not matches:
+    return ["Sin coincidencias detectadas."]
 
   formatted_lines = []
   for match in matches:
