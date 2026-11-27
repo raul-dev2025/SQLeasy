@@ -19,6 +19,11 @@ insert_multiple_queries = """
   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
 """
 
+insert_multiple_dummy = """
+  INSERT INTO dummy_table (name, address, industry, location, postal_code, email, notes, telephone, created, client_type, status)
+  VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+"""
+
 # DELETE DATA
 # When an entire row is deleted from a table, the other index will not be
 # affected; but the table will remain with a no-contiguous list of numbered
