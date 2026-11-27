@@ -238,43 +238,70 @@ create_emergencies_table = """
     );
 """
 
+# Tabla HUB DE CLIENTE central para asociar cualquier tipo de servicio/contrato al cliente
+client_hub_query = """
+    WITH movimientos AS (
+    SELECT client_id, 'ofertas' AS tipo_documento, offer_name AS documento, offer_last_update AS fecha
+    FROM offers
+    WHERE client_id = $1 AND offer_last_update >= CURRENT_TIMESTAMP - INTERVAL '3 months'
 
-################################################
-############### TABLE INSERTS ##################
-################################################
-# client_id, client_name, client_address, client_industry, client_location,
-# client_postal_code, client_email, client_notes, client_telephone,
-# client_created, client_status
-# DATE FOMAT: YYYY-MM-DD hh:mm:ss, or simply refer to now() to match with the actual date.
-# POSTAL CODE: This fileld can't start with Zero(0). It's a problem.
-insert_clients_table = """
-( NULL, 'correcaminos', 'addr', 'indust', 'loc', '08000', 'mail@str', 'notes', 600600600, now(), 1);
-"""
-# format CURRENT_TIMESTAMP: returns current date and time; YYYY-MM-DD hh:mm:ss.
-insert_products = """
-( NULL, 'name', '123AA89-99z', 'description', 1.99, 20, 16, 200.42, NULL, 1)
-"""
+    UNION ALL
 
-insert_services = """
-(NULL, 'name', 12345AA-ff3R, 'description', 17.42, 20, 16, 200.42, 0)
-"""
+    SELECT client_id, 'presupuestos' AS tipo_documento, budget_name AS documento, offer_last_update AS fecha
+    FROM budgets
+    WHERE client_id = $1 AND offer_last_update >= CURRENT_TIMESTAMP - INTERVAL '3 months'
 
-insert_offers = """
-(NULL, 10, 'name', 'description', 17.42, 25, 16, 200.17, 1)
-"""
+    UNION ALL
 
-insert_budgets = """
-(NULL, 10, 'name', 'description', 17.42, 20, 16, 200.42, 0)
-"""
+    SELECT client_id, 'pedidos' AS tipo_documento, order_name AS documento, offer_last_update AS fecha
+    FROM orders
+    WHERE client_id = $1 AND offer_last_update >= CURRENT_TIMESTAMP - INTERVAL '3 months'
 
-insert_bills = """
-(NULL, 10, 'name', 'description', 17.42, 20, 16, 200.42, 1)
-"""
+    UNION ALL
 
-insert_orders = """
-(NULL, 10, 'name', 'description', 17.42, 20, 16, 200.42, 1)
-"""
+    SELECT client_id, 'albaranes' AS tipo_documento, delivery_note_name AS documento, offer_last_update AS fecha
+    FROM delivery_notes
+    WHERE client_id = $1 AND offer_last_update >= CURRENT_TIMESTAMP - INTERVAL '3 months'
 
-insert_dn = """
-(NULL, 10, 'name', 'description', 17.42, 20, 16, 200.42, 1)
+    UNION ALL
+
+    SELECT client_id, 'facturas' AS tipo_documento, bill_name AS documento, offer_last_update AS fecha
+    FROM bills
+    WHERE client_id = $1 AND offer_last_update >= CURRENT_TIMESTAMP - INTERVAL '3 months'
+
+    UNION ALL
+
+    SELECT client_id, 'igualas' AS tipo_documento, referencia AS documento, fecha_inicio AS fecha
+    FROM iguala
+    WHERE client_id = $1 AND fecha_inicio >= CURRENT_TIMESTAMP - INTERVAL '3 months'
+
+    UNION ALL
+
+    SELECT client_id, 'bolsa_horas' AS tipo_documento, referencia AS documento, fecha_inicio AS fecha
+    FROM bolsa_horas
+    WHERE client_id = $1 AND fecha_inicio >= CURRENT_TIMESTAMP - INTERVAL '3 months'
+
+    UNION ALL
+
+    SELECT client_id, 'intervenciones' AS tipo_documento, referencia AS documento, fecha_intervencion AS fecha
+    FROM intervenciones
+    WHERE client_id = $1 AND fecha_intervencion >= CURRENT_TIMESTAMP - INTERVAL '3 months'
+
+    UNION ALL
+
+    SELECT client_id, 'urgencias' AS tipo_documento, referencia AS documento, fecha_aviso AS fecha
+    FROM urgencias
+    WHERE client_id = $1 AND fecha_aviso >= CURRENT_TIMESTAMP - INTERVAL '3 months'
+    )
+    SELECT
+    c.id AS client_id,
+    c.nombre AS cliente,
+    'ultimos_3_meses' AS trimestre,
+    m.tipo_documento,
+    MAX(m.fecha) AS ultima_fecha,
+    STRING_AGG(DISTINCT m.documento, ', ' ORDER BY m.documento) AS documentos
+    FROM movimientos m
+    JOIN clients c ON c.id = m.client_id
+    GROUP BY c.id, c.nombre, m.tipo_documento
+    ORDER BY m.tipo_documento;
 """
