@@ -8,6 +8,7 @@ from Queries import query_messages as messages_queries
 from Queries import query_fix_psg as fix_and_bugs
 from Queries import query_clientsDB_psg as dbClients
 from Tuplas import pymes as myTuple
+from Filters import filter_clients_table as names
 
 
 # This File is a map of known queries. To add new ones, just define a new variable
