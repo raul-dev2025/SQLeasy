@@ -1,3 +1,6 @@
+import FreeCC_psg as FreeCC, knownQueries_psg as sql_strings
+
+INVALID_EMAIL_MARKERS = frozenset({"", "pendiente", "desconocida", "nan"})
 
 def normalize_text(value):
   """Limpia un valor de texto y lo devuelve en minúsculas sin espacios extremos; si es nulo o queda vacío, devuelve None."""
