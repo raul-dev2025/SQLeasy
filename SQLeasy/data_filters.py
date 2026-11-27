@@ -104,3 +104,15 @@ def write_matches_log(formatted_lines, file_name):
 
   print(f"Puede consultar el log en {file_name}")
   return file_name
+
+def check_dummy_duplicates(file_name="duplicates.log"):
+  """
+  Consulta registros existentes con start_query, detecta duplicados y vuelca el resultado al log.
+  """
+  
+  from data_ops import start_query
+  
+  existing_rows = start_query(sql_strings.repeated_names)
+  matches = find_duplicates(sql_strings.val, existing_rows)
+  formatted_lines = format_matches(matches)
+  return write_matches_log(formatted_lines, file_name=file_name)
