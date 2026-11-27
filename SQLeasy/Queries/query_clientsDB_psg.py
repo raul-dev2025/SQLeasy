@@ -187,7 +187,7 @@ create_client_onboarding = """
     );
 """
 
-# Tabla de registro de intervenciones técnicas presenciales o remotas
+# Tabla de registro de INTERVENCIONES técnicas presenciales o remotas
 create_interventions_table = """
     CREATE TABLE intervenciones (
       id SERIAL PRIMARY KEY,
@@ -201,11 +201,11 @@ create_interventions_table = """
       es_exceso BOOLEAN DEFAULT FALSE,
       status BOOLEAN NOT NULL DEFAULT FALSE,
       FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE,
-      FOREIGN KEY (contrato_cliente_id) REFERENCES contratos_cliente(id) ON DELETE SET NULL
+      FOREIGN KEY (contrato_cliente_id) REFERENCES alta_cliente(id) ON DELETE SET NULL
     );
 """
 
-# Tabla de contratos de iguala y condiciones periódicas
+# Tabla de contratos de IGUALA y condiciones periódicas
 create_maintenance_contract_table = """
     CREATE TABLE iguala (
       id SERIAL PRIMARY KEY,
@@ -222,7 +222,7 @@ create_maintenance_contract_table = """
     );
 """
 
-# Tabla de gestión de avisos y urgencias prioritarias
+# Tabla de gestión de avisos y URGENCIAS prioritarias
 create_emergencies_table = """
     CREATE TABLE urgencias (
       id SERIAL PRIMARY KEY,
