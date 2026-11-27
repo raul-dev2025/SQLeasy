@@ -68,15 +68,11 @@ p_table = insert_queries.populate_table
 # Delete data. LIBRERÍA: query_insert_delete_data
 delete_entry = insert_queries.delete_registry
 
-# Insert multiple values
-# Do Note, that the placeholder has nothing to do with Python's strings
-# data type '%s'. Sql will use this syntax to work with all types
-# sql placeholder '%s' --> (str, int, dates...).
-# The data structures:
-insert_multiple = insert_queries.insert_multiple_queries
+# Insert multiple values. LIBRERÍA: query_insert_delete_data
+insert_multiple = insert_queries.insert_multiple_dummy
 
-# Fix and bugs
-fix_entry = fix_and_bugs.fix_id
+# To update data. LIBRERÍA: query_update_tables
+update_query = update_queries.update_id
 
 val0 = [
     (7, 'Hunk', 'Dodson', 'ENG', None, '1991-12-23', 11111, '+09812734098'),
