@@ -25,6 +25,19 @@ def registrar_alta_cliente(connection, datos_cliente, datos_alta, client_id=None
             datos_cliente.get("status", True),
         )
 
+        if client_id is not None:
+            last_sql = update_client
+            last_params = (*parametros_cliente, client_id)
+            cursor.execute(last_sql, last_params)
+            fila_cliente = cursor.fetchone()
+            if not fila_cliente:
+                raise ValueError(f"No existe un cliente con id={client_id}")
+            resolved_client_id = fila_cliente[0]
+        else:
+            last_sql = query_client
+            last_params = parametros_cliente
+            cursor.execute(last_sql, last_params)
+            resolved_client_id = cursor.fetchone()[0]
 
 
         connection.commit()
