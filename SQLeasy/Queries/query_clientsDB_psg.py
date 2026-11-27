@@ -173,17 +173,17 @@ create_hourly_pool_table = """
     );
 """
 
-# Tabla Hub central para asociar cualquier tipo de servicio/contrato al cliente
-create_client_contracts = """
-    CREATE TABLE contratos_cliente (
-      id SERIAL PRIMARY KEY,
-      client_id INT NOT NULL,
-      tipo_servicio VARCHAR(30) NOT NULL CHECK (tipo_servicio IN ('iguala_programada', 'iguala_indefinida', 'bolsa_horas', 'intervencion_ad_hoc')),
-      referencia_id INT NOT NULL,
-      estado VARCHAR(20) DEFAULT 'activo' CHECK (estado IN ('activo', 'pausado', 'finalizado', 'renovado')),
-      fecha_alta TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      observaciones TEXT,
-      FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
+# ALTA CLIENTE
+create_client_onboarding = """
+    CREATE TABLE alta_cliente (
+    id SERIAL PRIMARY KEY,
+    client_id INT NOT NULL,
+    tipo_servicio VARCHAR(30) NOT NULL,
+    referencia VARCHAR(60) NOT NULL,
+    estado VARCHAR(20) DEFAULT 'activo' CHECK (estado IN ('activo', 'pausado', 'finalizado', 'renovado')),
+    fecha_alta TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    observaciones TEXT,
+    FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
     );
 """
 
