@@ -77,8 +77,11 @@ update_query = update_queries.update_id
 # Fix and bugs. LIBRERÍA: query_fix_psg
 fix_entry = fix_and_bugs.fix_id
 
+# LIBRERÍA: Tuplas
 val = myTuple.val
 
+# Filters LIBRARY: Filters
+repeated_names = names.name_matching
 
 ################################################
 ############### APPLICATION MESAGES ############
