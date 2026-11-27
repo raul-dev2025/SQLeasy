@@ -51,6 +51,11 @@ def registrar_alta_cliente(connection, datos_cliente, datos_alta, client_id=None
         alta_id = cursor.fetchone()[0]
 
         connection.commit()
+        return {
+            "success": True,
+            "client_id": resolved_client_id,
+            "alta_id": alta_id,
+        }
 
     except Exception as e:
 
