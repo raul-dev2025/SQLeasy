@@ -1,13 +1,7 @@
 # Inserción de los datos maestros del cliente
-query_cliente = """
+query_client = """
     INSERT INTO clients (name, address, industry, location, postal_code, email, notes, telephone, created, client_type, status)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP, %s, %s)
-    RETURNING id;
-"""
-# Si se aporta un contrato inicial, procesarlo
-query_iguala = """
-    INSERT INTO iguala (client_id, modalidad, bloque_contratado, horas_incluidas, tarifa_mensual, fecha_inicio, fecha_fin, status, observaciones)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
     RETURNING id;
 """
 
