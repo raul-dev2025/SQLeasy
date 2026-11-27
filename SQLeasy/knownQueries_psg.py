@@ -62,7 +62,7 @@ delete_multiple_tables = table_queries.delete_multiple_tables
 alter_table = alter_queries.table_alters
 orders_alter = alter_queries.orders_alters
 
-# Populate tables
+# Populate tables. LIBRERÍA: query_insert_delete_data
 p_table = insert_queries.populate_table
 
 # To update data
