@@ -45,6 +45,35 @@ def find_duplicates(candidates, existing_rows):
     cand_name = normalize_text(raw_name)
     cand_email = normalize_email(raw_email)
 
+    for existing in normalized_existing:
+      name_match = (
+        cand_name is not None and cand_name == existing["norm_name"]
+      )
+      email_match = (
+        cand_email is not None and cand_email == existing["norm_email"]
+      )
+
+      if not (name_match or email_match):
+        continue
+
+      if name_match and email_match:
+        reason = "nombre y email"
+      elif name_match:
+        reason = "nombre"
+      else:
+        reason = "email"
+
+      matches.append({
+        "candidate_name": raw_name,
+        "candidate_email": raw_email,
+        "existing_id": existing["id"],
+        "existing_name": existing["raw_name"],
+        "existing_email": existing["raw_email"],
+        "reason": reason,
+      })
+
+  return matches
+
 
   formatted_lines = []
   for match in matches:
