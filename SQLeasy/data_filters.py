@@ -40,6 +40,21 @@ def find_duplicates(candidates, existing_rows):
     if not item or len(item) <= 5:
       continue
   
+    raw_name = item[0]
+    raw_email = item[5]
+    cand_name = normalize_text(raw_name)
+    cand_email = normalize_email(raw_email)
 
 
-  return matches
+  formatted_lines = []
+  for match in matches:
+    line = (
+      f"{match['candidate_name']} -> coincide con -> "
+      f"({match['existing_id']}) {match['existing_name']} "
+      f"| motivo: {match['reason']} "
+      f"| email_candidato: {match['candidate_email']} "
+      f"| email_existente: {match['existing_email']}"
+    )
+    formatted_lines.append(line)
+
+  return formatted_lines
