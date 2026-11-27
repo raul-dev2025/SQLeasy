@@ -41,8 +41,7 @@ q1 = simple_queries.default_query
 show = simple_queries.user_databases
 
 # DATA BASES' NAMES
-dbNames = ['customers_db', 'dummy_db', 'postgres', 'information_schema', 
-           'pg_catalog']
+# dbNames = ['customers_db', 'dummy_db', 'postgres', 'information_schema', 'pg_catalog']
 
 # CREATE DATABASE
 create_db = db_queries.create_db
