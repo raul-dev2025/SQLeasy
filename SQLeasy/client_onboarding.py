@@ -1,6 +1,16 @@
 from pg_errors import handle_pg_error
 from query_alta_cliente import query_client, update_client, insert_client_onboarding
 
+LONGITUD_TUPLA_ALTA = 14
+INDICE_CORTE_ALTA = 10
+
+def preparar_datos_de_alta(registro):
+  """
+  Extrae y valida una tupla de 14 elementos y la divide en los parámetros
+  correspondientes a `clients` (10) y `alta_cliente` (4).
+  """
+
+  return params_cliente, params_alta
 
 def registrar_alta_cliente(connection, datos_cliente, datos_alta, client_id=None):
     """
