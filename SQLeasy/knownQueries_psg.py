@@ -34,7 +34,7 @@ p_columnus = ['id', 'name', 'address', 'industry', 'location', 'postal_code', 'e
 ################### QUERIES ###################
 ################################################
 
-# DEFAULT QUERY
+# Default query. LIBRERÍA: query_simple_queries
 q1 = simple_queries.default_query
 
 # SHOW DATABASES
