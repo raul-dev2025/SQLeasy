@@ -58,6 +58,15 @@ def registrar_alta_cliente(connection, datos_cliente, datos_alta, client_id=None
         }
 
     except Exception as e:
+        diagnostico = handle_pg_error(
+            e,
+            connection=connection,
+            sql=last_sql,
+            val=last_params,
+            rollback=True,
+        )
+        raise RuntimeError(f"Error en el alta de cliente -> {diagnostico}") from e
 
     finally:
+        cursor.close()
 
