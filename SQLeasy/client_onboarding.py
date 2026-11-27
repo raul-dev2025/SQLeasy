@@ -10,6 +10,11 @@ def preparar_datos_de_alta(registro):
   correspondientes a `clients` (10) y `alta_cliente` (4).
   """
 
+  if isinstance(registro, (list, tuple)) and len(registro) == 1 and isinstance(registro[0], (list, tuple)):
+    tupla = registro[0]
+  else:
+    tupla = registro
+  
   return params_cliente, params_alta
 
 def registrar_alta_cliente(connection, datos_cliente, datos_alta, client_id=None):
