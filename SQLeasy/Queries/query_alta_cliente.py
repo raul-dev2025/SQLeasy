@@ -5,10 +5,21 @@ query_client = """
     RETURNING id;
 """
 
-query_bolsa = """
-    INSERT INTO bolsa_horas (client_id, tipo_bolsa, horas_compradas, fecha_caducidad, status)
-    VALUES (%s, %s, %s, %s, %s)
-    RETURNING id;
+update_client = """
+UPDATE clients
+SET
+    name = %s,
+    address = %s,
+    industry = %s,
+    location = %s,
+    postal_code = %s,
+    email = %s,
+    notes = %s,
+    telephone = %s,
+    client_type = %s,
+    status = %s
+WHERE id = %s
+RETURNING id;
 """
 
 # Registrar la relación en la tabla Hub (contratos_cliente)
