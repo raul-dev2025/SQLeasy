@@ -25,8 +25,6 @@ defaultdB = 'None'
 file = 'birdOfFire.txt'
 
 # VAULT
-# Idealy, this path should be an URL path, to the 'vault-tec' server we
-# expect to host in an undeterminated future. TécnicoSistema(raulvilchez.org).
 vault = '.hatch'
 
 # PANDAS COLUMNS
