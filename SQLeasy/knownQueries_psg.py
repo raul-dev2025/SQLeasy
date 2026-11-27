@@ -65,10 +65,7 @@ orders_alter = alter_queries.orders_alters
 # Populate tables. LIBRERÍA: query_insert_delete_data
 p_table = insert_queries.populate_table
 
-# To update data
-update_query = update_queries.update_id
-
-# Delete data
+# Delete data. LIBRERÍA: query_insert_delete_data
 delete_entry = insert_queries.delete_registry
 
 # Insert multiple values
