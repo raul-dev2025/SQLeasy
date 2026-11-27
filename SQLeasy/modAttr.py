@@ -11,3 +11,4 @@
 11 data_ops.modify_many_table()
 12 data_ops.dump_html()
 13 data_ops.modify_table()
+0 data_filters.check_dummy_duplicates()
