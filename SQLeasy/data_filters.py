@@ -35,6 +35,10 @@ def find_duplicates(candidates, existing_rows):
       "norm_email": normalize_email(row_email),
     })
 
+  matches = []
+  for item in candidates:
+    if not item or len(item) <= 5:
+      continue
   
 
 
