@@ -39,6 +39,16 @@ def registrar_alta_cliente(connection, datos_cliente, datos_alta, client_id=None
             cursor.execute(last_sql, last_params)
             resolved_client_id = cursor.fetchone()[0]
 
+        last_sql = insert_client_onboarding
+        last_params = (
+            resolved_client_id,
+            datos_alta["tipo_servicio"],
+            datos_alta["referencia"],
+            datos_alta.get("estado", "activo"),
+            datos_alta.get("observaciones"),
+        )
+        cursor.execute(last_sql, last_params)
+        alta_id = cursor.fetchone()[0]
 
         connection.commit()
 
