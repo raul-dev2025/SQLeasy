@@ -15,6 +15,9 @@ def preparar_datos_de_alta(registro):
   else:
     tupla = registro
   
+  if not isinstance(tupla, (list, tuple)):
+    raise ValueError("El registro de entrada debe ser una tupla o lista de 14 elementos.")
+
   return params_cliente, params_alta
 
 def registrar_alta_cliente(connection, datos_cliente, datos_alta, client_id=None):
