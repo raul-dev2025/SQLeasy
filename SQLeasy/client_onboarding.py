@@ -11,6 +11,19 @@ def registrar_alta_cliente(connection, datos_cliente, datos_alta, client_id=None
     last_sql = None
     last_params = None
 
+    try:
+        parametros_cliente = (
+            datos_cliente["name"],
+            datos_cliente["address"],
+            datos_cliente.get("industry"),
+            datos_cliente.get("location"),
+            datos_cliente.get("postal_code"),
+            datos_cliente.get("email"),
+            datos_cliente.get("notes"),
+            datos_cliente.get("telephone"),
+            datos_cliente.get("client_type"),
+            datos_cliente.get("status", True),
+        )
 
 
 
