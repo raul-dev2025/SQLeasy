@@ -22,8 +22,8 @@ WHERE id = %s
 RETURNING id;
 """
 
-# Registrar la relación en la tabla Hub (contratos_cliente)
-query_hub = """
-    INSERT INTO contratos_cliente (client_id, tipo_servicio, referencia_id, estado, observaciones)
-    VALUES (%s, %s, %s, %s, %s);
+insert_client_onboarding = """
+    INSERT INTO alta_cliente (client_id, tipo_servicio, referencia, estado, fecha_alta, observaciones)
+    VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, %s)
+    RETURNING id;
 """
