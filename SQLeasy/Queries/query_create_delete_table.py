@@ -3,7 +3,7 @@
 # file.
 
 # CREATE TABLE
-create_table = """
+create_table2 = """
     CREATE TABLE dummy_table(
       dummy_id SERIAL PRIMARY KEY,
       dummy_name VARCHAR(40) NOT NULL,
