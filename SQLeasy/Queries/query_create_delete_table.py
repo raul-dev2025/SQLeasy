@@ -15,6 +15,23 @@ create_table2 = """
     );
 """
 
+create_table = """
+    CREATE TABLE dummy_table(
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      address VARCHAR(100) NOT NULL,
+      industry VARCHAR(40),
+      location VARCHAR(40),
+      postal_code VARCHAR(10),
+      email VARCHAR(100),
+      notes VARCHAR(500),
+      telephone VARCHAR(20),
+      created TIMESTAMP NOT NULL,
+      client_type VARCHAR(30),
+      status BOOLEAN NOT NULL DEFAULT FALSE
+    );
+"""
+
 # DELETE TABLE
 delete_table = """
     DROP TABLE dummy_table
