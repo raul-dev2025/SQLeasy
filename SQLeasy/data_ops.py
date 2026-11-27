@@ -36,6 +36,8 @@ def start_query(default=sql_strings.show):
   for result in results:
     print(result)
 
+  return results
+
 def insert_into_table():
   """
   Insert into table <table name>. It takes no arguments;
