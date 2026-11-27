@@ -23,6 +23,8 @@ def preparar_datos_de_alta(registro):
       f"Se esperaban {LONGITUD_TUPLA_ALTA} elementos en la tupla y se recibieron {len(tupla)}."
       )
   
+  params_cliente = tuple(tupla[:INDICE_CORTE_ALTA])
+  params_alta = tuple(tupla[INDICE_CORTE_ALTA:])
   return params_cliente, params_alta
 
 def registrar_alta_cliente(connection, datos_cliente, datos_alta, client_id=None):
